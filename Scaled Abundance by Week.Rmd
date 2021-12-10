@@ -1,0 +1,124 @@
+---
+title: "Scaled Abundance by Week"
+author: "Tiffany Winter"
+date: "11/28/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(ggplot2)
+library(tinytex)
+library(dplyr)
+
+hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
+cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
+
+colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
+
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
+                       "Chlorophyl", "PAR", "Temp", "Salinity")
+
+
+cml$Alex <- as.numeric(cml$Alex)
+cml$Large_PN <- as.numeric(cml$Large_PN)
+cml$Small_PN <- as.numeric(cml$Small_PN)
+
+hampton$Alex <- as.numeric(hampton$Alex)
+hampton$Large_PN <- as.numeric(hampton$Large_PN)
+hampton$Small_PN <- as.numeric(hampton$Small_PN)
+
+hampton_scale_1 <- hampton %>% 
+  mutate(alex_scaled = Alex/max(hampton$Alex, na.rm = TRUE))
+
+hampton_scale_2 <- hampton_scale_1 %>% 
+  mutate(large_PN_scaled = Large_PN/max(hampton$Large_PN, na.rm = TRUE))
+
+hampton_scale_final <- hampton_scale_2 %>% 
+  mutate(small_PN_scaled = Small_PN/max(hampton$Small_PN, na.rm = TRUE))
+
+cml_scale_1 <- cml %>% 
+  mutate(alex_scaled = Alex/max(cml$Alex, na.rm = TRUE))
+
+cml_scale_2 <- cml_scale_1 %>% 
+  mutate(large_PN_scaled = Large_PN/max(cml$Large_PN, na.rm = TRUE))
+
+cml_scale_final <- cml_scale_2 %>% 
+  mutate(small_PN_scaled = Small_PN/max(cml$Small_PN, na.rm = TRUE))
+
+cols <- c("2017"="red", "2018"="blue", "2019"="purple", "2020"="green", "2021"="black")
+
+```
+
+
+```{r, fig.cap="The scaled abundance of *Alexandrium* (cells/l) by week of the year at the HHHR2 (Hampton, NH) sampling site. Scale was obtained by dividing all values by the highest abundance value of the species."}
+
+ggplot(hampton_scale_final, mapping = aes(x = Week, y = alex_scaled)) + 
+  geom_point(aes(color = factor(Year))) +
+  scale_color_manual(values = cols) +
+  scale_x_continuous(breaks = c(0,5,10,15,20,25,30,35,40,45,50,55)) +
+  theme_classic() + 
+  labs(x = "Week of the Year", y = "Scaled Abundance (Cells/l)")
+
+```
+
+
+```{r, fig.cap="The scaled abundance of large ($\\geq$ 3$\\mu$m) *Pseudo-nitzschia* (cells/l) by week of the year at the HHHR2 (Hampton, NH) sampling site. Scale was obtained by dividing all values by the highest abundance value of the species."}
+
+ggplot(hampton_scale_final, mapping = aes(x = Week, y = large_PN_scaled)) + 
+  geom_point(aes(color = factor(Year))) +
+  scale_color_manual(values = cols) +
+  scale_x_continuous(breaks = c(0,5,10,15,20,25,30,35,40,45,50,55)) +
+  theme_classic() + 
+  labs(x = "Week of the Year", y = "Scaled Abundance (Cells/l)")
+
+```
+
+
+```{r, fig.cap="The scaled abundance of small (< 3$\\mu$m) *Pseudo-nitzschia* (cells/l) by week of the year at the HHHR2 (Hampton, NH) sampling site. Scale was obtained by dividing all values by the highest abundance value of the species."}
+
+ggplot(hampton_scale_final, mapping = aes(x = Week, y = small_PN_scaled)) + 
+  geom_point(aes(color = factor(Year))) +
+  scale_color_manual(values = cols) +
+  scale_x_continuous(breaks = c(0,5,10,15,20,25,30,35,40,45,50,55)) +
+  theme_classic() + 
+  labs(x = "Week of the Year", y = "Scaled Abundance (Cells/l)")
+
+```
+
+
+```{r, fig.cap="The scaled abundance of *Alexandrium* (cells/l) by week of the year at the UNH Pier (CML, Newington, NH) sampling site. Scale was obtained by dividing all values by the highest abundance value of the species."}
+
+ggplot(cml_scale_final, mapping = aes(x = Week, y = alex_scaled)) + 
+  geom_point(aes(color = factor(Year))) +
+  scale_color_manual(values = cols) +
+  scale_x_continuous(breaks = c(0,5,10,15,20,25,30,35,40,45,50,55)) +
+  theme_classic() + 
+  labs(x = "Week of the Year", y = "Scaled Abundance (Cells/l)")
+
+```
+
+
+```{r, fig.cap="The scaled abundance of large ($\\geq$ 3$\\mu$m) *Pseudo-nitzschia* (cells/l) by week of the year at the UNH Pier (CML, Newington, NH) sampling site. Scale was obtained by dividing all values by the highest abundance value of the species."}
+
+ggplot(cml_scale_final, mapping = aes(x = Week, y = large_PN_scaled)) + 
+  geom_point(aes(color = factor(Year))) +
+  scale_color_manual(values = cols) +
+  scale_x_continuous(breaks = c(0,5,10,15,20,25,30,35,40,45,50,55)) +
+  theme_classic() + 
+  labs(x = "Week of the Year", y = "Scaled Abundance (Cells/l)")
+
+```
+
+
+```{r, fig.cap="The scaled abundance of small (< 3$\\mu$m) *Pseudo-nitzschia* (cells/l) by week of the year at the UNH Pier (CML, Newington, NH) sampling site. Scale was obtained by dividing all values by the highest abundance value of the species."}
+
+ggplot(cml_scale_final, mapping = aes(x = Week, y = small_PN_scaled)) + 
+  geom_point(aes(color = factor(Year))) +
+  scale_color_manual(values = cols) +
+  scale_x_continuous(breaks = c(0,5,10,15,20,25,30,35,40,45,50,55)) +
+  theme_classic() + 
+  labs(x = "Week of the Year", y = "Scaled Abundance (Cells/l)")
+
+```

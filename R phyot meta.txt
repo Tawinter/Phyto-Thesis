@@ -1,0 +1,8 @@
+Working R Notes
+
+-HHHR2 and UNH Pier datasets were imported into R
+-column names were modified to "Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large PN", "Small PN", and "Chlorophyl", "PAR", "Temp", and "Salinity" in the UNH pier data.
+
+-zeros in both dataframes were changed to 0.01 for each of working with logs
+
+-Before continuing need to look at NAs and see if all of them are NAs or some are zeros
