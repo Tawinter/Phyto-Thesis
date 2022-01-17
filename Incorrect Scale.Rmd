@@ -29,44 +29,23 @@ hampton$Alex <- as.numeric(hampton$Alex)
 hampton$Large_PN <- as.numeric(hampton$Large_PN)
 hampton$Small_PN <- as.numeric(hampton$Small_PN)
 
-h_alex_max <- aggregate(hampton$Alex, by = list(hampton$Year), max, na.rm = TRUE)
-h_lpn_max <- aggregate(hampton$Large_PN, by = list(hampton$Year), max, na.rm = TRUE)
-h_spn_max <- aggregate(hampton$Small_PN, by = list(hampton$Year), max, na.rm = TRUE)
-c_alex_max <- aggregate(cml$Alex, by = list(cml$Year), max, na.rm = TRUE)
-c_lpn_max <- aggregate(cml$Large_PN, by = list(cml$Year), max, na.rm = TRUE)
-c_spn_max <- aggregate(cml$Small_PN, by = list(cml$Year), max, na.rm = TRUE)
-
-colnames(h_alex_max)<- c("Year", "Maxalex")
-colnames(h_lpn_max)<- c("Year", "Maxlpn")
-colnames(h_spn_max)<- c("Year", "Maxspn")
-colnames(c_alex_max)<- c("Year", "Maxalex")
-colnames(c_lpn_max)<- c("Year", "Maxlpn")
-colnames(c_spn_max)<- c("Year", "Maxspn")
-
-hampton_join <- inner_join(hampton, h_alex_max, by = c('Year'))
-hampton_join1 <- inner_join(hampton_join, h_lpn_max, by = c('Year'))
-hampton_join2 <- inner_join(hampton_join1, h_spn_max, by = c('Year'))
-cml_join <- inner_join(cml, c_alex_max, by = c('Year'))
-cml_join1 <- inner_join(cml_join, c_lpn_max, by = c('Year'))
-cml_join2 <- inner_join(cml_join1, c_spn_max, by = c('Year'))
-
-hampton_scale_1 <- hampton_join2 %>% 
-  mutate(alex_scaled = Alex/Maxalex)
+hampton_scale_1 <- hampton %>% 
+  mutate(alex_scaled = Alex/max(hampton$Alex, na.rm = TRUE))
 
 hampton_scale_2 <- hampton_scale_1 %>% 
-  mutate(large_PN_scaled = Large_PN/Maxlpn)
+  mutate(large_PN_scaled = Large_PN/max(hampton$Large_PN, na.rm = TRUE))
 
 hampton_scale_final <- hampton_scale_2 %>% 
-  mutate(small_PN_scaled = Small_PN/Maxspn)
+  mutate(small_PN_scaled = Small_PN/max(hampton$Small_PN, na.rm = TRUE))
 
-cml_scale_1 <- cml_join2 %>% 
-  mutate(alex_scaled = Alex/Maxalex)
+cml_scale_1 <- cml %>% 
+  mutate(alex_scaled = Alex/max(cml$Alex, na.rm = TRUE))
 
 cml_scale_2 <- cml_scale_1 %>% 
-  mutate(large_PN_scaled = Large_PN/Maxlpn)
+  mutate(large_PN_scaled = Large_PN/max(cml$Large_PN, na.rm = TRUE))
 
 cml_scale_final <- cml_scale_2 %>% 
-  mutate(small_PN_scaled = Small_PN/Maxspn)
+  mutate(small_PN_scaled = Small_PN/max(cml$Small_PN, na.rm = TRUE))
 
 cols <- c("2017"="red", "2018"="blue", "2019"="purple", "2020"="green", "2021"="black")
 
