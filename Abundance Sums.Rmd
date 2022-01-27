@@ -6,25 +6,63 @@ output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(ggplot2)
+library(tinytex)
+library(dplyr)
+library(tidyr)
+
+
+hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
+cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
+
+colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
+
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
+                  "Chlorophyl", "PAR", "Temp", "Salinity")
+
+
+cml$Alex <- as.numeric(cml$Alex)
+cml$Large_PN <- as.numeric(cml$Large_PN)
+cml$Small_PN <- as.numeric(cml$Small_PN)
+
+hampton$Alex <- as.numeric(hampton$Alex)
+hampton$Large_PN <- as.numeric(hampton$Large_PN)
+hampton$Small_PN <- as.numeric(hampton$Small_PN)
+
+cml1 <- cml %>% 
+  group_by(Year) %>% 
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+hampton1 <- hampton %>% 
+  group_by(Year) %>% 
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+cml1_long <- gather(cml1, Species, Total_Abundance, Alex:Small_PN, factor_key=TRUE)
+
+hampton1_long <- gather(hampton1, Species, Total_Abundance, Alex:Small_PN, factor_key=TRUE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r, fig.cap="The total abundance of *Alexandrium*, *Pseudo-nitzschia* large, and *Pseudo-nitzschia* small (cells/l) by year at the UNH Pier (Newington, NH) sampling site."}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+ggplot(cml1_long, mapping = aes(x = Year, y = Total_Abundance, shape = Species)) + 
+  geom_point(size = 3) +
+  theme_classic() + 
+  labs(x = "Year", y = "Total Abundance (Cells/l)")
 
-```{r cars}
-summary(cars)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+```{r, fig.cap="The total abundance of *Alexandrium*, *Pseudo-nitzschia* large, and *Pseudo-nitzschia* small (cells/l) by year at the HHHR2 (Hampton, NH) sampling site."}
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+ggplot(hampton1_long, mapping = aes(x = Year, y = Total_Abundance, shape = Species)) + 
+  geom_point(size = 3) +
+  scale_y_continuous(labels = function(x) format(x, scientific = TRUE)) +
+  theme_classic() + 
+  labs(x = "Year", y = "Total Abundance (Cells/l)")
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
