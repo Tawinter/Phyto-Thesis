@@ -41,11 +41,12 @@ hampton1_long <- gather(hampton1, Species, Total_Abundance, Alex:Small_PN, facto
 #Graphing data
 ggplot(cml1_long, mapping = aes(x = Year, y = Total_Abundance, shape = Species)) + 
   geom_point(size = 3) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_classic() + 
   labs(x = "Year", y = "Total Abundance (Cells/l)")
 
 ggplot(hampton1_long, mapping = aes(x = Year, y = Total_Abundance, shape = Species)) + 
   geom_point(size = 3) +
-  scale_y_continuous(labels = function(x) format(x, scientific = TRUE)) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_classic() + 
   labs(x = "Year", y = "Total Abundance (Cells/l)")
