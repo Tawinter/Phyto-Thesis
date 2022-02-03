@@ -1,3 +1,12 @@
+---
+title: "Month Sums"
+author: "Tiffany Winter"
+date: "2/3/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(ggplot2)
 library(tinytex)
 library(dplyr)
@@ -14,7 +23,6 @@ colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "La
 
 cols <- c("2017"="red", "2018"="blue", "2019"="purple", "2020"="green", "2021"="black")
 
-#Grouping (by two variables), filtering, and creating a new table with multiple columns and set parameters
 cml_month <- cml %>% 
   group_by(Year, Month) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
@@ -22,9 +30,10 @@ cml_month <- cml %>%
 hampton_month <- hampton %>% 
   group_by(Year, Month) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+```
 
-#Graphs 6 total 3 per site and 1 per species, all years on one graph
 
+```{r, fig.cap="The log of the monthly sum of *Alexandrium* (cells/l) at the UNH Pier (New Castle, NH) sampling site. The months run from January (J) to December (D)."}
 ggplot(cml_month, mapping = aes(x = Month, y = Alex, color = Year)) + 
   geom_point(aes(color = factor(Year))) +
   scale_color_manual(values = cols) +
@@ -33,7 +42,10 @@ ggplot(cml_month, mapping = aes(x = Month, y = Alex, color = Year)) +
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_classic() + 
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
+```
 
+
+```{r, fig.cap="The log of the monthly sum of large ($\\geq$ 3$\\mu$m) *Pseudo-nitzschia* (cells/l) at the UNH Pier (New Castle, NH) sampling site. The months run from January (J) to December (D)."}
 ggplot(cml_month, mapping = aes(x = Month, y = Large_PN, color = Year)) + 
   geom_point(aes(color = factor(Year))) +
   scale_color_manual(values = cols) +
@@ -42,7 +54,9 @@ ggplot(cml_month, mapping = aes(x = Month, y = Large_PN, color = Year)) +
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_classic() + 
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
+```
 
+```{r, fig.cap="The log of the monthly sum of small (< 3$\\mu$m) *Pseudo-nitzschia* (cells/l) at the UNH Pier (New Castle, NH) sampling site. The months run from January (J) to December (D)."}
 ggplot(cml_month, mapping = aes(x = Month, y = Small_PN, color = Year)) + 
   geom_point(aes(color = factor(Year))) +
   scale_color_manual(values = cols) +
@@ -51,7 +65,10 @@ ggplot(cml_month, mapping = aes(x = Month, y = Small_PN, color = Year)) +
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_classic() + 
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
+```
 
+
+```{r, fig.cap="The log of the monthly sum of *Alexandrium* (cells/l) at the HHHR2 (Hampton, NH) sampling site. The months run from January (J) to December (D)."}
 ggplot(hampton_month, mapping = aes(x = Month, y = Alex, color = Year)) + 
   geom_point(aes(color = factor(Year))) +
   scale_color_manual(values = cols) +
@@ -60,7 +77,9 @@ ggplot(hampton_month, mapping = aes(x = Month, y = Alex, color = Year)) +
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_classic() + 
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
+```
 
+```{r, fig.cap="The log of the monthly sum of large ($\\geq$ 3$\\mu$m) *Pseudo-nitzschia* (cells/l) at the HHHR2 (Hampton, NH) sampling site. The months run from January (J) to December (D)."}
 ggplot(hampton_month, mapping = aes(x = Month, y = Large_PN, color = Year)) + 
   geom_point(aes(color = factor(Year))) +
   scale_color_manual(values = cols) +
@@ -69,7 +88,10 @@ ggplot(hampton_month, mapping = aes(x = Month, y = Large_PN, color = Year)) +
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_classic() + 
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
+```
 
+
+```{r, fig.cap="The log of the monthly sum of small (< 3$\\mu$m) *Pseudo-nitzschia* (cells/l) at the HHHR2 (Hampton, NH) sampling site. The months run from January (J) to December (D)."}
 ggplot(hampton_month, mapping = aes(x = Month, y = Small_PN, color = Year)) + 
   geom_point(aes(color = factor(Year))) +
   scale_color_manual(values = cols) +
@@ -78,3 +100,5 @@ ggplot(hampton_month, mapping = aes(x = Month, y = Small_PN, color = Year)) +
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_classic() + 
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
+```
+
