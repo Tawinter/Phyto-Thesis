@@ -19,17 +19,11 @@ cml <- cml %>% rowwise() %>%
 hampton <- hampton %>% rowwise() %>%
   mutate(PnTotal = sum(c_across(Large_PN:Small_PN)))
 
-#Two graphs one for each site comparing species abundances
-ggplot(cml, mapping = aes(x = PnTotal, y = Alex)) + 
-  geom_point() +
-  scale_x_log10() +
-  scale_y_log10() +
-  theme_classic() + 
-  labs(x = "Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+#Plot monthly averages?
 
-ggplot(hampton, mapping = aes(x = PnTotal, y = Alex)) + 
-  geom_point() +
-  scale_x_log10() +
-  scale_y_log10() +
+
+#Graphs: using weekly data, area chart, plot totals and then each size class
+ggplot(cml, mapping = aes(x = PnTotal, y = Alex)) + 
+  geom_area() +
   theme_classic() + 
   labs(x = "Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
