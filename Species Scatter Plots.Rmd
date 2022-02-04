@@ -1,0 +1,52 @@
+---
+title: "Species Scatter Plots"
+author: "Tiffany Winter"
+date: "2/4/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+
+library(ggplot2)
+library(tinytex)
+library(dplyr)
+library(tidyr)
+
+
+hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
+cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
+
+colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
+
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
+                  "Chlorophyl", "PAR", "Temp", "Salinity")
+
+cml <- cml %>% rowwise() %>%
+  mutate(PnTotal = sum(c_across(Large_PN:Small_PN)))
+
+hampton <- hampton %>% rowwise() %>%
+  mutate(PnTotal = sum(c_across(Large_PN:Small_PN)))
+```
+
+
+```{r, fig.cap= "A scatter plot of the abundance (cells/l) of *Alexandrium* against the summed abundance of large ($\\geq$ 3$\\mu$m) and small (< 3$\\mu$m) *Pseudo-nitzschia* at the UNH Pier (Newcastle, NH) sampling site."}
+ggplot(cml, mapping = aes(x = PnTotal, y = Alex)) + 
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_classic() + 
+  labs(x = "Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+```
+
+
+```{r, fig.cap= "A scatter plot of the abundance (cells/l) of *Alexandrium* against the summed abundance of large ($\\geq$ 3$\\mu$m) and small (< 3$\\mu$m) *Pseudo-nitzschia* at the HHHR2 (Hampton, NH) sampling site."}
+ggplot(hampton, mapping = aes(x = PnTotal, y = Alex)) + 
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_classic() + 
+  labs(x = "Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+```
+
+
