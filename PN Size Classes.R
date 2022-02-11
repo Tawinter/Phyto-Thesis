@@ -2,6 +2,7 @@ library(ggplot2)
 library(tinytex)
 library(dplyr)
 library(tidyr)
+library(formattable)
 
 
 hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
@@ -14,9 +15,11 @@ colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "La
 
 #Create new dataframe
 
-size_cml <- cml[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Large_PN", "Small_PN")]
+size_cml <- cml[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Large_PN", 
+                     "Small_PN")]
 
-size_hampton <- hampton[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Large_PN", "Small_PN")]
+size_hampton <- hampton[ , c("Week", "Date", "Month", "Day", "Year", "Station", 
+                             "Large_PN", "Small_PN")]
 
 #Get the average per month ad create new column
 size_cml_1 <- size_cml %>% 
@@ -30,13 +33,24 @@ size_hampton_1 <- size_hampton %>%
 #Turn into long data
 size_cml_1 <- gather(size_cml_1, Class, Sum_Abundance, Large_PN:Small_PN, factor_key=TRUE)
 
-size_hampton_1 <- gather(size_hampton_1, Class, Sum_Abundance, Large_PN:Small_PN, factor_key=TRUE)
+size_hampton_1 <- gather(size_hampton_1, Class, Sum_Abundance, Large_PN:Small_PN, 
+                         factor_key=TRUE)
 
+#Adding in percentages
+size_cml_pct <- size_cml_1 %>%
+  group_by(Year, Month) %>%
+  mutate(freq = formattable::percent(Sum_Abundance / sum(Sum_Abundance)))
+
+size_hampton_pct <- size_hampton_1 %>%
+  group_by(Year, Month) %>%
+  mutate(freq = formattable::percent(Sum_Abundance / sum(Sum_Abundance)))
 
 #Graphs: using weekly data, area chart, plot totals and then each size class
 ggplot(size_cml_1, aes(x = Month, y = Sum_Abundance))+
   geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+  geom_text(aes(label = scales::percent(pct)), 
+            position="stack",vjust=+2.1,col="firebrick",size=3) +
+  scale_y_log10(label = scales::percent) +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_classic() +

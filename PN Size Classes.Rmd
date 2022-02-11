@@ -1,0 +1,61 @@
+---
+title: "PN Class Compairson"
+author: "Tiffany Winter"
+date: "2/11/2022"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(ggplot2)
+library(tinytex)
+library(dplyr)
+library(tidyr)
+
+hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
+cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
+
+colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
+
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
+                  "Chlorophyl", "PAR", "Temp", "Salinity")
+
+size_cml <- cml[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Large_PN", "Small_PN")]
+
+size_hampton <- hampton[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Large_PN", "Small_PN")]
+
+size_cml_1 <- size_cml %>% 
+  group_by(Year, Month) %>% 
+  summarize_at(c("Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+size_hampton_1 <- size_hampton %>% 
+  group_by(Year, Month) %>% 
+  summarize_at(c("Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+size_cml_1 <- gather(size_cml_1, Class, Sum_Abundance, Large_PN:Small_PN, factor_key=TRUE)
+
+size_hampton_1 <- gather(size_hampton_1, Class, Sum_Abundance, Large_PN:Small_PN, 
+                         factor_key=TRUE)
+```
+
+###PN Class Graphs for All Years
+
+```{r, fig.cap="The log sum of both large ($\\geq$ 3$\\mu$m) and small (<3$\\mu$m) *Pseudo-nitzschia* (cells/l) from years 2017 to 2021 at the UNH Pier (New Castle, NH) sampling site. The months run from January (J) to December (D)."}
+ggplot(size_cml_1, aes(x = Month, y = Sum_Abundance))+
+  geom_col(aes(fill = Class)) +
+  scale_y_log10() +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
+                     labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  theme_classic() +
+  labs(x = "Month", y = "Total Abundance (Cells/l)")
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
