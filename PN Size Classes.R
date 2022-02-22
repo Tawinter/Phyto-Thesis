@@ -36,6 +36,8 @@ size_cml_1 <- gather(size_cml_1, Class, Sum_Abundance, Large_PN:Small_PN, factor
 size_hampton_1 <- gather(size_hampton_1, Class, Sum_Abundance, Large_PN:Small_PN, 
                          factor_key=TRUE)
 
+size_cml_1$MY <- paste(size_cml_1$Month, "-", size_cml_1$Year)
+
 #Adding in percentages
 size_cml_pct <- size_cml_1 %>%
   group_by(Year, Month) %>%
