@@ -21,7 +21,7 @@ size_cml <- cml[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Large_P
 size_hampton <- hampton[ , c("Week", "Date", "Month", "Day", "Year", "Station", 
                              "Large_PN", "Small_PN")]
 
-#Get the average per month ad create new column
+#Get the sum per month ad create new column
 size_cml_1 <- size_cml %>% 
   group_by(Year, Month) %>% 
   summarize_at(c("Large_PN", "Small_PN"), sum, na.rm = TRUE)
@@ -45,110 +45,114 @@ size_hampton_pct <- size_hampton_1 %>%
   group_by(Year, Month) %>%
   mutate(freq = formattable::percent(Sum_Abundance / sum(Sum_Abundance)))
 
-#Graphs: all years on one graph no percentages
-ggplot(size_cml_1, aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+#Fill Graphs of all
+ggplot(size_cml_1, aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_hampton_1, aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_hampton_1, aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
+
 
 ##Graphs: Years on separate graphs with percentages
 
-ggplot(size_cml_pct[which(size_cml_pct$Year== 2017),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_cml_pct[which(size_cml_pct$Year== 2017),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_pct[which(size_cml_pct$Year== 2017),], aes(x = Month, y = Sum_Abundance, fill = Class)) + 
-  geom_bar(stat = "identity") +
-  geom_text(aes(label = freq), vjust = 0) +
+ggplot(size_cml_pct[which(size_cml_pct$Year== 2018),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-
-ggplot(size_cml_1[which(size_cml_1$Year== 2018),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_cml_pct[which(size_cml_pct$Year== 2019),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_1[which(size_cml_1$Year== 2019),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_cml_pct[which(size_cml_pct$Year== 2020),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_1[which(size_cml_1$Year== 2020),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_cml_pct[which(size_cml_pct$Year== 2021),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_1[which(size_cml_1$Year== 2021),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_hampton_pct[which(size_cml_pct$Year== 2017),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_1[which(size_cml_1$Year== 2017),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_hampton_pct[which(size_cml_pct$Year== 2018),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_1[which(size_cml_1$Year== 2018),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_hampton_pct[which(size_cml_pct$Year== 2019),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_1[which(size_cml_1$Year== 2019),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_hampton_pct[which(size_cml_pct$Year== 2020),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_cml_1[which(size_cml_1$Year== 2020),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
+ggplot(size_hampton_pct[which(size_cml_pct$Year== 2021),], aes(x = Month, y = Sum_Abundance, fill = Class)) +
+  geom_col(position = "fill") +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_y_continuous(labels = scales::percent) +
+  scale_fill_brewer(palette = "Pastel1") +
   theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
-
-ggplot(size_cml_1[which(size_cml_1$Year== 2021),], aes(x = Month, y = Sum_Abundance))+
-  geom_col(aes(fill = Class)) +
-  scale_y_log10() +
-  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
-                     labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
-  theme_classic() +
-  labs(x = "Month", y = "Total Abundance (Cells/l)")
+  labs(x = "Month", y = "Percentage of Abundance")
