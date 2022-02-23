@@ -12,15 +12,19 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
                   "Chlorophyl", "PAR", "Temp", "Salinity")
 
+#Subsetting the data
+cml_match <- subset(cml, age >= 20 | age < 10,
+                  select=c(ID, Weight))
+
 #Sum the large and small PN values and create a new column in the same dataframe
-cml <- cml %>% rowwise() %>%
+cml_sum <- cml %>% rowwise() %>%
   mutate(PnTotal = sum(c_across(Large_PN:Small_PN)))
 
-hampton <- hampton %>% rowwise() %>%
+hampton_sum <- hampton %>% rowwise() %>%
   mutate(PnTotal = sum(c_across(Large_PN:Small_PN)))
 
 #Two graphs one for each site comparing species abundances
-ggplot(cml, mapping = aes(x = PnTotal, y = Alex)) + 
+ggplot(cml, mapping = aes(x = Large_PN, y = Alex)) + 
   geom_point() +
   scale_x_log10() +
   scale_y_log10() +
