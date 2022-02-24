@@ -3,6 +3,7 @@ library(tinytex)
 library(dplyr)
 library(tidyr)
 
+setwd("D:/R/phyto-thesis")
 
 hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
 cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
@@ -12,18 +13,75 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
                   "Chlorophyl", "PAR", "Temp", "Salinity")
 
-#Subsetting the data
-cml_match <- subset(cml, age >= 20 | age < 10,
-                  select=c(ID, Weight))
+#Filtering out species that have zero in the row
+cml_LPN <- filter (cml, Alex > 0, Large_PN > 0)
 
-#Sum the large and small PN values and create a new column in the same dataframe
+cml_SPN <- filter (cml, Alex > 0, Small_PN > 0)
+
+hampton_LPN <- filter (hampton, Alex > 0, Large_PN > 0)
+
+hampton_SPN <- filter (hampton, Alex > 0, Small_PN > 0)
+
+#Scatter plots
+ggplot(cml_LPN, mapping = aes(x = Large_PN, y = Alex)) + 
+  geom_point() +
+  theme_classic() + 
+  labs(x = "Large Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+ggplot(cml_SPN, mapping = aes(x = Small_PN, y = Alex)) + 
+  geom_point() +
+  theme_classic() + 
+  labs(x = "Small Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+ggplot(cml_LPN, mapping = aes(x = Large_PN, y = Alex)) + 
+  geom_point() +
+  scale_x_log10() +
+  theme_classic() + 
+  labs(x = "Large Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+ggplot(cml_SPN, mapping = aes(x = Small_PN, y = Alex)) + 
+  geom_point() +
+  scale_x_log10() +
+  theme_classic() + 
+  labs(x = "Small Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+ggplot(hampton_LPN, mapping = aes(x = Large_PN, y = Alex)) + 
+  geom_point() +
+  theme_classic() + 
+  labs(x = "Large Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+ggplot(hampton_SPN, mapping = aes(x = Small_PN, y = Alex)) + 
+  geom_point() +
+  theme_classic() + 
+  labs(x = "Small Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+ggplot(hampton_LPN, mapping = aes(x = Large_PN, y = Alex)) + 
+  geom_point() +
+  scale_x_log10() +
+  theme_classic() + 
+  labs(x = "Large Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+ggplot(hampton_SPN, mapping = aes(x = Small_PN, y = Alex)) + 
+  geom_point() +
+  scale_x_log10() +
+  theme_classic() + 
+  labs(x = "Small Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+
+
+
+#(RETIRED) Subsetting the data frame
+cml_match <- subset(cml, Alex > 0 | Large_PN > 0,
+                    select=c(Week, Month, Day, Year, Alex, Large_PN))
+
+#(RETIRED) Sum the large and small PN values and create a new column in the same dataframe
 cml_sum <- cml %>% rowwise() %>%
   mutate(PnTotal = sum(c_across(Large_PN:Small_PN)))
 
 hampton_sum <- hampton %>% rowwise() %>%
   mutate(PnTotal = sum(c_across(Large_PN:Small_PN)))
 
-#Two graphs one for each site comparing species abundances
+#(RETIRED) Two graphs one for each site comparing species abundances
 ggplot(cml, mapping = aes(x = Large_PN, y = Alex)) + 
   geom_point() +
   scale_x_log10() +
