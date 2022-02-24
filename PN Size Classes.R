@@ -25,7 +25,7 @@ size_cml <- cml[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Large_P
 size_hampton <- hampton[ , c("Week", "Date", "Month", "Day", "Year", "Station", 
                              "Large_PN", "Small_PN")]
 
-#Get the sum per month ad create new column
+#Get the sum per month and create new column
 size_cml_1 <- size_cml %>% 
   group_by(Year, Month) %>% 
   summarize_at(c("Large_PN", "Small_PN"), sum, na.rm = TRUE)
@@ -56,9 +56,14 @@ size_cml_1$MY <- paste(size_cml_1$MoAb, "-", size_cml_1$Year)
 
 size_hampton_1$MY <- paste(size_hampton_1$MoAb, "-", size_hampton_1$Year)
 
+#Remove rows that have a zero
+size_cml_1 <- filter (size_cml_1, Sum_Abundance > 0.0)
+
+size_hampton_1 <- filter (size_hampton_1, Sum_Abundance > 0.0)
+
 #Graphing each month in each year separately on one graph
 
-ggplot(size_cml_1[which(size_cml_1$Sum_Abundance > 0.0),], aes(x = fct_inorder(MY), y = Sum_Abundance, fill = Class)) +
+ggplot(size_cml_1, aes(x = fct_inorder(MY), y = Sum_Abundance, fill = Class)) +
   geom_col(position = "fill") +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_brewer(palette = "Pastel1") +
@@ -66,7 +71,7 @@ ggplot(size_cml_1[which(size_cml_1$Sum_Abundance > 0.0),], aes(x = fct_inorder(M
   theme(axis.text.x = element_text(angle = 90)) +
   labs(x = "Month", y = "Percentage of Abundance")
 
-ggplot(size_hampton_1[which(size_hampton_1$Sum_Abundance > 0.0),], aes(x = fct_inorder(MY), y = Sum_Abundance, fill = Class)) +
+ggplot(size_hampton_1, aes(x = fct_inorder(MY), y = Sum_Abundance, fill = Class)) +
   geom_col(position = "fill") +
   scale_y_continuous(labels = scales::percent) +
   scale_fill_brewer(palette = "Pastel1") +

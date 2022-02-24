@@ -12,7 +12,7 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
                   "Chlorophyl", "PAR", "Temp", "Salinity")
 
-cols <- c("2017"="red", "2018"="blue", "2019"="purple", "2020"="green", "2021"="black")
+cols <- c("2017"="red", "2018"="blue", "2019"="purple", "2020"="green", "2021"="black", "2022" = "orange")
 
 #Grouping (by two variables), filtering, and creating a new table with multiple columns and set parameters
 cml_month <- cml %>% 
@@ -26,7 +26,7 @@ hampton_month <- hampton %>%
 #Graphs 6 total 3 per site and 1 per species, all years on one graph
 
 ggplot(cml_month, mapping = aes(x = Month, y = Alex, color = Year)) + 
-  geom_point(aes(color = factor(Year))) +
+  geom_point(aes(color = factor(Year)), size = 3) +
   scale_color_manual(values = cols) +
   scale_y_log10() +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
@@ -35,7 +35,7 @@ ggplot(cml_month, mapping = aes(x = Month, y = Alex, color = Year)) +
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
 
 ggplot(cml_month, mapping = aes(x = Month, y = Large_PN, color = Year)) + 
-  geom_point(aes(color = factor(Year))) +
+  geom_point(aes(color = factor(Year)), size = 3) +
   scale_color_manual(values = cols) +
   scale_y_log10() +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
@@ -44,7 +44,7 @@ ggplot(cml_month, mapping = aes(x = Month, y = Large_PN, color = Year)) +
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
 
 ggplot(cml_month, mapping = aes(x = Month, y = Small_PN, color = Year)) + 
-  geom_point(aes(color = factor(Year))) +
+  geom_point(aes(color = factor(Year)), size = 3) +
   scale_color_manual(values = cols) +
   scale_y_log10() +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
@@ -53,7 +53,7 @@ ggplot(cml_month, mapping = aes(x = Month, y = Small_PN, color = Year)) +
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
 
 ggplot(hampton_month, mapping = aes(x = Month, y = Alex, color = Year)) + 
-  geom_point(aes(color = factor(Year))) +
+  geom_point(aes(color = factor(Year)), size = 3) +
   scale_color_manual(values = cols) +
   scale_y_log10() +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
@@ -62,7 +62,7 @@ ggplot(hampton_month, mapping = aes(x = Month, y = Alex, color = Year)) +
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
 
 ggplot(hampton_month, mapping = aes(x = Month, y = Large_PN, color = Year)) + 
-  geom_point(aes(color = factor(Year))) +
+  geom_point(aes(color = factor(Year)), size = 3) +
   scale_color_manual(values = cols) +
   scale_y_log10() +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
@@ -71,7 +71,7 @@ ggplot(hampton_month, mapping = aes(x = Month, y = Large_PN, color = Year)) +
   labs(x = "Month", y = "Log Total Abundance (Cells/l)")
 
 ggplot(hampton_month, mapping = aes(x = Month, y = Small_PN, color = Year)) + 
-  geom_point(aes(color = factor(Year))) +
+  geom_point(aes(color = factor(Year)), size = 3) +
   scale_color_manual(values = cols) +
   scale_y_log10() +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
