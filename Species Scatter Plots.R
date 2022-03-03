@@ -13,14 +13,43 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
                   "Chlorophyl", "PAR", "Temp", "Salinity")
 
+#Create new dataframe
+cml_APN <- cml[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", 
+                     "Small_PN")]
+
+hampton_APN <- hampton[ , c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", 
+                             "Large_PN", "Small_PN")]
+
+#Turn into long data
+cml_1 <- gather(cml_APN, Class, Abundance, Large_PN:Small_PN, factor_key=TRUE)
+
+hampton_1 <- gather(hampton_APN, Class, Abundance, Large_PN:Small_PN, 
+                         factor_key=TRUE)
+
 #Filtering out species that have zero in the row
-cml_LPN <- filter (cml, Alex > 0, Large_PN > 0)
+cml_PN <- filter (cml_1, Alex > 0, Abundance > 0)
 
-cml_SPN <- filter (cml, Alex > 0, Small_PN > 0)
+hampton_PN <- filter (hampton_1, Alex > 0, Abundance > 0)
 
-hampton_LPN <- filter (hampton, Alex > 0, Large_PN > 0)
+#New scatter plots with 2 colored points
+ggplot(cml_PN, mapping = aes(x = Abundance, y = Alex, color = Class)) + 
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_classic() + 
+  labs(x = "Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
 
-hampton_SPN <- filter (hampton, Alex > 0, Small_PN > 0)
+ggplot(hampton_PN, mapping = aes(x = Abundance, y = Alex, color = Class)) + 
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  theme_classic() + 
+  labs(x = "Pseudo-nitzschia Abundance (Cells/l)", y = "Alexandrium Abundance (Cells/l)")
+
+
+
+
+
 
 #Scatter plots
 ggplot(cml_LPN, mapping = aes(x = Large_PN, y = Alex)) + 
