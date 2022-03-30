@@ -5,6 +5,7 @@ Site: GRBULB (Great Bay Estuary Upper Little Bay)
 **Phosphorus from "Phosphorus, Orthophosphate As P Dissolved Water quality"
 **Salinity from "Salinity Water quality"
 **Temperature from "Temperature Water Water quality"
+**TSS from "Solids, Suspended Total Water quality"
 
 Site: GRBCML (Great Bay Estuary Coastal Marine Lab)
 **Chlorophyll a retrieved by Liz
@@ -13,4 +14,9 @@ Site: GRBCML (Great Bay Estuary Coastal Marine Lab)
 **Salinity from "Salinity Water quality"
 **Silica retrieved by Liz
 **Temperature from "Temperature Water Water quality"
-**TSS retrieved by Liz
+**TSS retrieved by Liz\
+
+Site: 04-SAG (Sagamore)
+**Chlorophyll a from "Chlorophyll a, Corrected For Pheophytin Water Quality"
+**Nitrate & Nitrite from "Nitrogen, Nitrite (No2) + Nitrate (No3) as N Water quality"
+**Phosphorus from "Phosphorus, Orthophosphte As P Dissolved Water quality"
