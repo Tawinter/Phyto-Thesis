@@ -4,7 +4,6 @@ library(formattable)
 library(forcats)
 library(tidyverse)
 
-install.packages("tidyverse")
 
 setwd("D:/R/phyto-thesis")
 
@@ -133,6 +132,14 @@ ulb_n <- read.csv("./PREP/grbulb_Nitrate_Nitrite.csv", stringsAsFactors = TRUE)
 ulb_p <- read.csv("./PREP/grbulb_phosphorus.csv", stringsAsFactors = TRUE)
 ulb_sal <- read.csv("./PREP/grbulb_salinity.csv", stringsAsFactors = TRUE)
 ulb_temp <- read.csv("./PREP/grbulb_temp.csv", stringsAsFactors = TRUE)
+ulb_tss <- read.csv("./PREP/grbulb_tss.csv", stringsAsFactors = TRUE)
+sag_chla <- read.csv("./PREP/04sag_chla.csv", stringsAsFactors = TRUE)
+sag_n <- read.csv("./PREP/04sag_nitrogen.csv", stringsAsFactors = TRUE)
+bchn_sal<- read.csv("./PREP/bchn_salinity.csv", stringsAsFactors = TRUE)
+bchn_temp <- read.csv("./PREP/bchn_temp.csv", stringsAsFactors = TRUE)
+gb_n <- read.csv("./PREP/grbgb_nitrogen.csv", stringsAsFactors = TRUE)
+or_chla <- read.csv("./PREP/grbor_chla.csv", stringsAsFactors = TRUE)
+ulb_temp <- read.csv("./PREP/grbulb_temp.csv", stringsAsFactors = TRUE)
 
 #Create new dataframe pulling out only wanted years
 cfil_chla <- cml_chla %>% filter(year >= 2017)
@@ -142,6 +149,10 @@ cfil_sal <- cml_sal %>% filter(Year >= 2017)
 cfil_si <- cml_si %>% filter(year >= 2017)
 cfil_temp <- cml_temp %>% filter(Year >= 2017)
 cfil_tss <- cml_tss %>% filter(year >= 2017)
+bfil_sal <- bchn_sal %>% filter(Year >= 2017)
+bfil_temp <- bchn_temp %>% filter(Year >= 2017)
+gfil_n <- gb_n %>% filter(Year >= 2017)
+ofil_chla <- or_chla %>% filter(Year >= 2017)
 
 #Create new dataframe keeping only wanted columns
 cfil_chla <- cfil_chla[ , c("Month", "datavalue", "year")]
@@ -156,6 +167,13 @@ ufil_n <- ulb_n[ , c("Month", "datavalue", "Year")]
 ufil_p <- ulb_p[ , c("Month", "datavalue", "Year")]
 ufil_sal <- ulb_sal[ , c("Month", "datavalue", "Year")]
 ufil_temp <- ulb_temp[ , c("Month", "datavalue", "Year")]
+ufil_tss <- ulb_tss[ , c("Month", "datavalue", "Year")]
+bfil_sal <- bfil_sal[ , c("Month", "datavalue", "Year")]
+bfil_temp <- bfil_temp[ , c("Month", "datavalue", "Year")]
+gfil_n <- gfil_n[ , c("Month", "datavalue", "Year")]
+ofil_chla <- ofil_chla[ , c("Month", "datavalue", "Year")]
+sfil_chla <- sag_chla[ , c("Month", "datavalue", "Year")]
+sfil_n <- sag_n[ , c("Month", "datavalue", "Year")]
 
 #Insert month abv. for month number
 cfil_chla$MoAb <- mymonths[ cfil_chla$Month ]
@@ -169,7 +187,13 @@ ufil_chla$MoAb <- mymonths[ ufil_chla$Month ]
 ufil_n$MoAb <- mymonths[ ufil_n$Month ]
 ufil_p$MoAb <- mymonths[ ufil_p$Month ]
 ufil_sal$MoAb <- mymonths[ ufil_sal$Month ]
-ufil_temp$MoAb <- mymonths[ ufil_temp$Month ]
+ufil_tss$MoAb <- mymonths[ ufil_tss$Month ]
+sfil_chla$MoAb <- mymonths[ sfil_chla$Month ]
+sfil_n$MoAb <- mymonths[ sfil_n$Month ]
+bfil_sal$MoAb <- mymonths[ bfil_sal$Month ]
+bfil_temp$MoAb <- mymonths[ bfil_temp$Month ]
+gfil_n$MoAb <- mymonths[ gfil_n$Month ]
+ofil_chla$MoAb <- mymonths[ofil_chla$Month ]
 
 #Concentrate month abv. and year with "-"
 cfil_chla$MY <- paste(cfil_chla$MoAb, "-", cfil_chla$year)
@@ -184,8 +208,15 @@ ufil_n$MY <- paste(ufil_n$MoAb, "-", ufil_n$Year)
 ufil_p$MY <- paste(ufil_p$MoAb, "-", ufil_p$Year)
 ufil_sal$MY <- paste(ufil_sal$MoAb, "-", ufil_sal$Year)
 ufil_temp$MY <- paste(ufil_temp$MoAb, "-", ufil_temp$Year)
+ufil_tss$MY <- paste(ufil_tss$MoAb, "-", ufil_tss$Year)
+sfil_chla$MY <- paste(sfil_chla$MoAb, "-", sfil_chla$Year)
+sfil_n$MY <- paste(sfil_n$MoAb, "-", sfil_n$Year)
+bfil_sal$MY <- paste(bfil_sal$MoAb, "-", bfil_sal$Year)
+bfil_temp$MY <- paste(bfil_temp$MoAb, "-", bfil_temp$Year)
+gfil_n$MY <- paste(gfil_n$MoAb, "-", gfil_n$Year)
+ofil_chla$MY <- paste(ofil_chla$MoAb, "-", ofil_chla$Year)
 
-#Combining chlorophyll a dataframes
+#Taking averages and combining chlorophyll a dataframes
 cavg_chla <- cfil_chla %>% 
   group_by(fct_inorder(MY)) %>% 
   summarize_at(c("datavalue"), mean, na.rm = TRUE)
@@ -194,10 +225,24 @@ uavg_chla <- ufil_chla %>%
   group_by(fct_inorder(MY)) %>% 
   summarize_at(c("datavalue"), mean, na.rm = TRUE)
 
+savg_chla <- sfil_chla %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
+oavg_chla <- ofil_chla %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
 colnames(cavg_chla)<- c("fct_inorder.MY.", "chla")
 colnames(uavg_chla)<- c("fct_inorder.MY.", "chla")
+colnames(savg_chla)<- c("fct_inorder.MY.", "chla")
+colnames(oavg_chla)<- c("fct_inorder.MY.", "chla")
 
 chla <- full_join(cavg_chla, uavg_chla, by = c('fct_inorder.MY.'))
+chla <- full_join(chla, savg_chla, by = c('fct_inorder.MY.'))
+chla <- full_join(chla, oavg_chla, by = c('fct_inorder.MY.'))
+
+#NEED TO DETERMINE WHAT THE NEXT STEP IS#
 
 chla <- chla %>% mutate(chla = coalesce(chla.x,chla.y)) %>%
   select(`fct_inorder.MY.`, chla)
@@ -211,10 +256,24 @@ uavg_n <- ufil_n %>%
   group_by(fct_inorder(MY)) %>% 
   summarize_at(c("datavalue"), mean, na.rm = TRUE)
 
+savg_n <- sfil_n %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
+gavg_n <- gfil_n %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
 colnames(cavg_n)<- c("fct_inorder.MY.", "nitrogen")
 colnames(uavg_n)<- c("fct_inorder.MY.", "nitrogen")
+colnames(savg_n)<- c("fct_inorder.MY.", "nitrogen")
+colnames(gavg_n)<- c("fct_inorder.MY.", "nitrogen")
 
 nitrogen <- full_join(cavg_n, uavg_n, by = c('fct_inorder.MY.'))
+nitrogen <- full_join(nitrogen, savg_n, by = c('fct_inorder.MY.'))
+nitrogen <- full_join(nitrogen, gavg_n, by = c('fct_inorder.MY.'))
+
+#NEED TO DETERMINE WHAT THE NEXT STEP IS#
 
 nitrogen <- nitrogen %>% mutate(nitrogen = coalesce(nitrogen.x,nitrogen.y)) %>%
   select(`fct_inorder.MY.`, nitrogen)
@@ -245,10 +304,18 @@ uavg_sal <- ufil_sal %>%
   group_by(fct_inorder(MY)) %>% 
   summarize_at(c("datavalue"), mean, na.rm = TRUE)
 
+bavg_sal <- bfil_sal %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
 colnames(cavg_sal)<- c("fct_inorder.MY.", "salinity")
 colnames(uavg_sal)<- c("fct_inorder.MY.", "salinity")
+colnames(bavg_sal)<- c("fct_inorder.MY.", "salinity")
 
 salinity <- full_join(cavg_sal, uavg_sal, by = c('fct_inorder.MY.'))
+salinity <- full_join(salinity, bavg_sal, by = c('fct_inorder.MY.'))
+
+#NEED TO DETERMINE WHAT IS THE NEXT STEP#
 
 salinity <- salinity %>% mutate(salinity = coalesce(salinity.x,salinity.y)) %>%
   select(`fct_inorder.MY.`, salinity)
@@ -262,13 +329,38 @@ uavg_temp <- ufil_temp %>%
   group_by(fct_inorder(MY)) %>% 
   summarize_at(c("datavalue"), mean, na.rm = TRUE)
 
+bavg_temp <- bfil_temp %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
 colnames(cavg_temp)<- c("fct_inorder.MY.", "temperature")
 colnames(uavg_temp)<- c("fct_inorder.MY.", "temperature")
+colnames(bavg_temp)<- c("fct_inorder.MY.", "temperature")
 
 temperature <- full_join(cavg_temp, uavg_temp, by = c('fct_inorder.MY.'))
+temperature <- full_join(temperature, bavg_temp, by = c('fct_inorder.MY.'))
+
+#NEED TO DERERMINE WHAT THE NEXT STEP IS#
 
 temperature <- temperature %>% mutate(temperature = coalesce(temperature.x,temperature.y)) %>%
   select(`fct_inorder.MY.`, temperature)
+
+#Combining TSS dataframes
+cavg_tss <- cfil_tss %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
+uavg_tss <- ufil_tss %>% 
+  group_by(fct_inorder(MY)) %>% 
+  summarize_at(c("datavalue"), mean, na.rm = TRUE)
+
+colnames(cavg_tss)<- c("fct_inorder.MY.", "tss")
+colnames(uavg_tss)<- c("fct_inorder.MY.", "tss")
+
+tss <- full_join(cavg_tss, uavg_tss, by = c('fct_inorder.MY.'))
+
+tss <- tss %>% mutate(tss = coalesce(tss.x,tss.y)) %>%
+  select(`fct_inorder.MY.`, tss)
 
 #averaging silica and tss
 silica <- cfil_si %>% 
@@ -276,12 +368,6 @@ silica <- cfil_si %>%
   summarize_at(c("datavalue"), mean, na.rm = TRUE)
 
 colnames(silica)<- c("fct_inorder.MY.", "silica")
-
-tss <- cfil_tss %>% 
-  group_by(fct_inorder(MY)) %>% 
-  summarize_at(c("datavalue"), mean, na.rm = TRUE)
-
-colnames(tss)<- c("fct_inorder.MY.", "tss")
 
 #combing nutrient dataframes with master dataframes
 cmlnut <- full_join(cmlnut, chla, by = c('fct_inorder.MY.'))
@@ -291,6 +377,14 @@ cmlnut <- full_join(cmlnut, salinity, by = c('fct_inorder.MY.'))
 cmlnut <- full_join(cmlnut, temperature, by = c('fct_inorder.MY.'))
 cmlnut <- full_join(cmlnut, silica, by = c('fct_inorder.MY.'))
 cmlnut <- full_join(cmlnut, tss, by = c('fct_inorder.MY.'))
+
+#Correcting cmlnut dataframe for new column additions
+cmlnut <- subset( cmlnut, select = -tss.x )
+
+#Correcting column names from new column additions to cmlnut dataframe
+colnames(cmlnut)<- c("fct_inorder(MY)", "Alex(Sum)", "Large_PN(Sum)", "Small_PN(Sum)", 
+                     "Alex(avg)", "Large_PN(avg)", "Small_PN(avg)", "chla", "nitrogen", "phosphorus", "salinity",
+                     "temperature", "silica", "tss")
 
 #Write completed nutrient csv file
 write.csv(cmlnut,'CML_Nut.csv', row.names = FALSE)
