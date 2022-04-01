@@ -139,7 +139,6 @@ bchn_sal<- read.csv("./PREP/bchn_salinity.csv", stringsAsFactors = TRUE)
 bchn_temp <- read.csv("./PREP/bchn_temp.csv", stringsAsFactors = TRUE)
 gb_n <- read.csv("./PREP/grbgb_nitrogen.csv", stringsAsFactors = TRUE)
 or_chla <- read.csv("./PREP/grbor_chla.csv", stringsAsFactors = TRUE)
-ulb_temp <- read.csv("./PREP/grbulb_temp.csv", stringsAsFactors = TRUE)
 
 #Create new dataframe pulling out only wanted years
 cfil_chla <- cml_chla %>% filter(year >= 2017)
@@ -187,6 +186,7 @@ ufil_chla$MoAb <- mymonths[ ufil_chla$Month ]
 ufil_n$MoAb <- mymonths[ ufil_n$Month ]
 ufil_p$MoAb <- mymonths[ ufil_p$Month ]
 ufil_sal$MoAb <- mymonths[ ufil_sal$Month ]
+ufil_temp$MoAb <- mymonths[ ufil_temp$Month ]
 ufil_tss$MoAb <- mymonths[ ufil_tss$Month ]
 sfil_chla$MoAb <- mymonths[ sfil_chla$Month ]
 sfil_n$MoAb <- mymonths[ sfil_n$Month ]
@@ -238,11 +238,21 @@ colnames(uavg_chla)<- c("fct_inorder.MY.", "chla")
 colnames(savg_chla)<- c("fct_inorder.MY.", "chla")
 colnames(oavg_chla)<- c("fct_inorder.MY.", "chla")
 
-chla <- full_join(cavg_chla, uavg_chla, by = c('fct_inorder.MY.'))
-chla <- full_join(chla, savg_chla, by = c('fct_inorder.MY.'))
-chla <- full_join(chla, oavg_chla, by = c('fct_inorder.MY.'))
+uavg_chla <- uavg_chla[-c(3:7), ]
+oavg_chla <- oavg_chla[-c(1:9), ]
+oavg_chla <- oavg_chla[-c(2:9), ]
 
-#NEED TO DETERMINE WHAT THE NEXT STEP IS#
+chla <- full_join(cavg_chla, savg_chla, by = c('fct_inorder.MY.'))
+
+chla <- chla %>% mutate(chla = coalesce(chla.x,chla.y)) %>%
+  select(`fct_inorder.MY.`, chla)
+
+chla <- full_join(chla, uavg_chla, by = c('fct_inorder.MY.'))
+
+chla <- chla %>% mutate(chla = coalesce(chla.x,chla.y)) %>%
+  select(`fct_inorder.MY.`, chla)
+
+chla <- full_join(chla, oavg_chla, by = c('fct_inorder.MY.'))
 
 chla <- chla %>% mutate(chla = coalesce(chla.x,chla.y)) %>%
   select(`fct_inorder.MY.`, chla)
@@ -269,11 +279,20 @@ colnames(uavg_n)<- c("fct_inorder.MY.", "nitrogen")
 colnames(savg_n)<- c("fct_inorder.MY.", "nitrogen")
 colnames(gavg_n)<- c("fct_inorder.MY.", "nitrogen")
 
-nitrogen <- full_join(cavg_n, uavg_n, by = c('fct_inorder.MY.'))
-nitrogen <- full_join(nitrogen, savg_n, by = c('fct_inorder.MY.'))
-nitrogen <- full_join(nitrogen, gavg_n, by = c('fct_inorder.MY.'))
+gavg_n <- gavg_n[-c(1:9), ]
+gavg_n <- gavg_n[-c(4:9), ]
 
-#NEED TO DETERMINE WHAT THE NEXT STEP IS#
+nitrogen <- full_join(cavg_n, savg_n, by = c('fct_inorder.MY.'))
+
+nitrogen <- nitrogen %>% mutate(nitrogen = coalesce(nitrogen.x,nitrogen.y)) %>%
+  select(`fct_inorder.MY.`, nitrogen)
+
+nitrogen <- full_join(nitrogen, uavg_n, by = c('fct_inorder.MY.'))
+
+nitrogen <- nitrogen %>% mutate(nitrogen = coalesce(nitrogen.x,nitrogen.y)) %>%
+  select(`fct_inorder.MY.`, nitrogen)
+
+nitrogen <- full_join(nitrogen, gavg_n, by = c('fct_inorder.MY.'))
 
 nitrogen <- nitrogen %>% mutate(nitrogen = coalesce(nitrogen.x,nitrogen.y)) %>%
   select(`fct_inorder.MY.`, nitrogen)
@@ -312,10 +331,18 @@ colnames(cavg_sal)<- c("fct_inorder.MY.", "salinity")
 colnames(uavg_sal)<- c("fct_inorder.MY.", "salinity")
 colnames(bavg_sal)<- c("fct_inorder.MY.", "salinity")
 
-salinity <- full_join(cavg_sal, uavg_sal, by = c('fct_inorder.MY.'))
-salinity <- full_join(salinity, bavg_sal, by = c('fct_inorder.MY.'))
+bavg_sal <- bavg_sal[-c(1:2), ]
 
-#NEED TO DETERMINE WHAT IS THE NEXT STEP#
+uavg_sal <- uavg_sal[-c(2:5), ]
+uavg_sal <- uavg_sal[-c(7:10), ]
+uavg_sal <- uavg_sal[-c(13:15), ]
+
+salinity <- full_join(cavg_sal, bavg_sal, by = c('fct_inorder.MY.'))
+
+salinity <- salinity %>% mutate(salinity = coalesce(salinity.x,salinity.y)) %>%
+  select(`fct_inorder.MY.`, salinity)
+
+salinity <- full_join(salinity, uavg_sal, by = c('fct_inorder.MY.'))
 
 salinity <- salinity %>% mutate(salinity = coalesce(salinity.x,salinity.y)) %>%
   select(`fct_inorder.MY.`, salinity)
@@ -337,10 +364,18 @@ colnames(cavg_temp)<- c("fct_inorder.MY.", "temperature")
 colnames(uavg_temp)<- c("fct_inorder.MY.", "temperature")
 colnames(bavg_temp)<- c("fct_inorder.MY.", "temperature")
 
-temperature <- full_join(cavg_temp, uavg_temp, by = c('fct_inorder.MY.'))
-temperature <- full_join(temperature, bavg_temp, by = c('fct_inorder.MY.'))
+bavg_temp <- bavg_temp[-c(1:4), ]
 
-#NEED TO DERERMINE WHAT THE NEXT STEP IS#
+uavg_temp <- uavg_temp[-c(2:5), ]
+uavg_temp <- uavg_temp[-c(7:9), ]
+uavg_temp <- uavg_temp[-c(13:15), ]
+
+temperature <- full_join(cavg_temp, bavg_temp, by = c('fct_inorder.MY.'))
+
+temperature <- temperature %>% mutate(temperature = coalesce(temperature.x,temperature.y)) %>%
+  select(`fct_inorder.MY.`, temperature)
+
+temperature <- full_join(temperature, uavg_temp, by = c('fct_inorder.MY.'))
 
 temperature <- temperature %>% mutate(temperature = coalesce(temperature.x,temperature.y)) %>%
   select(`fct_inorder.MY.`, temperature)
@@ -362,7 +397,7 @@ tss <- full_join(cavg_tss, uavg_tss, by = c('fct_inorder.MY.'))
 tss <- tss %>% mutate(tss = coalesce(tss.x,tss.y)) %>%
   select(`fct_inorder.MY.`, tss)
 
-#averaging silica and tss
+#averaging silica
 silica <- cfil_si %>% 
   group_by(fct_inorder(MY)) %>% 
   summarize_at(c("datavalue"), mean, na.rm = TRUE)
@@ -380,11 +415,15 @@ cmlnut <- full_join(cmlnut, tss, by = c('fct_inorder.MY.'))
 
 #Correcting cmlnut dataframe for new column additions
 cmlnut <- subset( cmlnut, select = -tss.x )
+cmlnut <- subset( cmlnut, select = -chla.x )
+cmlnut <- subset( cmlnut, select = -nitrogen.x )
+cmlnut <- subset( cmlnut, select = -salinity.x )
+cmlnut <- subset( cmlnut, select = -temperature.x )
 
 #Correcting column names from new column additions to cmlnut dataframe
-colnames(cmlnut)<- c("fct_inorder(MY)", "Alex(Sum)", "Large_PN(Sum)", "Small_PN(Sum)", 
-                     "Alex(avg)", "Large_PN(avg)", "Small_PN(avg)", "chla", "nitrogen", "phosphorus", "salinity",
-                     "temperature", "silica", "tss")
+colnames(cmlnut)<- c("fct_inorder.MY.", "Alex(Sum)", "Large_PN(Sum)", "Small_PN(Sum)", 
+                     "Alex(avg)", "Large_PN(avg)", "Small_PN(avg)", "phosphorus", "silica", "tss", "chla",
+                     "nitrogen", "salinity", "temperature")
 
 #Write completed nutrient csv file
 write.csv(cmlnut,'CML_Nut.csv', row.names = FALSE)
