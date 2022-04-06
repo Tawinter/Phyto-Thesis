@@ -425,5 +425,9 @@ colnames(cmlnut)<- c("fct_inorder.MY.", "Alex(Sum)", "Large_PN(Sum)", "Small_PN(
                      "Alex(avg)", "Large_PN(avg)", "Small_PN(avg)", "phosphorus", "silica", "tss", "chla",
                      "nitrogen", "salinity", "temperature")
 
+#Creating N:P column
+cmlnut <- read.csv("CML_Nut.csv", stringsAsFactors = TRUE)
+cmlnut$'N:P' <- cmlnut$nitrogen / cmlnut$phosphorus
+
 #Write completed nutrient csv file
 write.csv(cmlnut,'CML_Nut.csv', row.names = FALSE)
