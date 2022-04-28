@@ -1,0 +1,97 @@
+#Thesis/Poster Graphs
+
+library(ggplot2)
+library(tinytex)
+library(dplyr)
+library(tidyr)
+library(formattable)
+library(forcats)
+library(tidyverse)
+library(viridis)
+library(ggtext)
+
+#What is the seasonal pattern?
+totalch <- read.csv("totalch.csv", stringsAsFactors = TRUE)
+
+ggplot(totalch, aes(x = Month, y = sum, color = factor(Year)))  + 
+  geom_point(size = 1.5) +
+  scale_color_viridis(discrete = TRUE) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
+                     labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  theme_bw() + 
+  labs(x = "Month", y = "Log Sum Abundance (Cells/l)", color = "Year") +
+  scale_fill_discrete(name = "Year") +
+  facet_grid(rows = vars(species), cols = vars(Location))
+
+
+#How are the populations changing over time?
+hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
+cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
+
+colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
+
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", "Temp", "Salinity")
+
+cml_max <- cml %>% 
+  group_by(Year) %>% 
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
+
+hampton_max <- hampton %>% 
+  group_by(Year) %>% 
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
+
+write.csv(cml_max,'CML_Max.csv', row.names = FALSE)
+write.csv(hampton_max,'Hampton_Max.csv', row.names = FALSE)
+
+maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
+
+maxch_1 <- gather(maxch, species, max, Alex, Large_PN, Small_PN)
+
+ggplot(maxch_1, aes(x = Year, y = max, color = factor(species)))  + 
+  geom_point(size = 3) +
+  scale_color_viridis(discrete = TRUE) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
+  theme_bw() + 
+  labs(x = "Year", y = "Log Max Abundance (Cells/l)", color = "Species") +
+  facet_grid(cols = vars(Location))
+
+
+#Are they co-occurring?
+install.packages("ggtext")
+
+combch <- read.csv("combinedch.csv" , stringsAsFactors = TRUE)
+
+colnames(combch)<- c("Week", "Month", "Day", "Year", "Location", "Alex", "Large_PN", "Small_PN")
+
+comb <- gather(combch, size_class, abundance, Large_PN, Small_PN)
+
+ggplot(comb, aes(x = abundance, y = Alex))  + 
+  geom_point(size = 2) +
+  scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
+  theme_bw() + 
+  labs(x = "*Pseudo-nitzschia* Abundance (Cells/l)", y = "*Alexandrium* Abundance (Cells/l)") +
+  theme(axis.title.x = ggtext::element_markdown()) +
+  theme(axis.title.y = ggtext::element_markdown()) +
+  facet_grid(rows = vars(size_class), cols = vars(Location))
+
+
+##Poster Graph Nitrogen:Phosphorus
+nutlong <- read.csv("CML_Nut_Long.csv" , stringsAsFactors = TRUE)
+
+nutlong <- nutlong %>%
+  separate(fct_inorder.MY., sep="-", into = c("month", "year"))
+
+nutlong <- transform(nutlong,
+                     year = as.numeric(year))
+
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = N.P, y = abundance.avg, 
+                                                     color = factor(year))) +
+  geom_point(size = 2) +
+  scale_x_continuous(limits = c(0, 8)) +
+  scale_color_viridis(discrete = TRUE) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
+  theme_bw() +
+  labs (x = "Nitrogen:Phosphorus", y = "Average Abundance (Cells/l)") +
+  facet_grid(rows = vars(species.avg))
