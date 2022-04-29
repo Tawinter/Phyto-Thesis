@@ -9,19 +9,22 @@ library(forcats)
 library(tidyverse)
 library(viridis)
 library(ggtext)
+library(hexbin)
+
+install.packages("hexbin")
 
 #What is the seasonal pattern?
 totalch <- read.csv("totalch.csv", stringsAsFactors = TRUE)
 
-ggplot(totalch, aes(x = Month, y = sum, color = factor(Year)))  + 
-  geom_point(size = 1.5) +
-  scale_color_viridis(discrete = TRUE) +
+ggplot(totalch, aes(x = Month, y = sum)) + 
+  geom_point(aes(fill = factor(Year)), size = 2, shape = 21) +
+  scale_fill_manual(values = c("#440154FF", "#39568CFF", "#1F968BFF", 
+                      "#3CBB75FF", "#95D840FF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
                      labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
   theme_bw() + 
-  labs(x = "Month", y = "Log Sum Abundance (Cells/l)", color = "Year") +
-  scale_fill_discrete(name = "Year") +
+  labs(x = "Month", y = "Log Sum Abundance (Cells/l)", fill = "Year") +
   facet_grid(rows = vars(species), cols = vars(Location))
 
 
@@ -33,29 +36,28 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", "Temp", "Salinity")
 
-cml_max <- cml %>% 
+cml_sum <- cml %>% 
   group_by(Year) %>% 
-  summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
 
-hampton_max <- hampton %>% 
+hampton_sum <- hampton %>% 
   group_by(Year) %>% 
-  summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
 
-write.csv(cml_max,'CML_Max.csv', row.names = FALSE)
-write.csv(hampton_max,'Hampton_Max.csv', row.names = FALSE)
+write.csv(cml_sum,'CML_Sum.csv', row.names = FALSE)
+write.csv(hampton_sum,'Hampton_Sum.csv', row.names = FALSE)
 
-maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
+sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
 
-maxch_1 <- gather(maxch, species, max, Alex, Large_PN, Small_PN)
+sumch_1 <- gather(sumch, species, sum, Alex, Large_PN, Small_PN)
 
-ggplot(maxch_1, aes(x = Year, y = max, color = factor(species)))  + 
-  geom_point(size = 3) +
-  scale_color_viridis(discrete = TRUE) +
+ggplot(sumch_1, aes(x = Year, y = sum))  + 
+  geom_point(aes(fill = factor(species)), size = 3, shape = 21) +
+  scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
-  labs(x = "Year", y = "Log Max Abundance (Cells/l)", color = "Species") +
+  labs(x = "Year", y = "Log Annual Sum (Cells/l)", fill = "Species") +
   facet_grid(cols = vars(Location))
-
 
 #Are they co-occurring?
 install.packages("ggtext")
@@ -86,12 +88,20 @@ nutlong <- nutlong %>%
 nutlong <- transform(nutlong,
                      year = as.numeric(year))
 
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = N.P, y = abundance.avg, 
-                                                     color = factor(year))) +
-  geom_point(size = 2) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = N.P, y = abundance.avg)) +
+  geom_point(aes(fill = factor(year)), shape = 21, size = 2) +
   scale_x_continuous(limits = c(0, 8)) +
-  scale_color_viridis(discrete = TRUE) +
+  scale_fill_manual(values = c("#440154FF", "#39568CFF", "#1F968BFF", 
+                               "#3CBB75FF", "#95D840FF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() +
   labs (x = "Nitrogen:Phosphorus", y = "Average Abundance (Cells/l)") +
   facet_grid(rows = vars(species.avg))
+
+ggplot(sumch_1, aes(x = Year, y = sum))  + 
+  geom_point(aes(fill = factor(species)), size = 3, shape = 21) +
+  scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
+  theme_bw() + 
+  labs(x = "Year", y = "Log Annual Sum (Cells/l)", fill = "Species") +
+  facet_grid(cols = vars(Location))
