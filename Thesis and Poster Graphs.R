@@ -88,12 +88,12 @@ nutlong <- nutlong %>%
 nutlong <- transform(nutlong,
                      year = as.numeric(year))
 
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = N.P, y = abundance.avg)) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = phosphorus, y = abundance.avg)) +
   geom_point(aes(fill = factor(year)), shape = 21, size = 3) +
-  scale_x_continuous(limits = c(0, 8)) +
+  scale_x_continuous(limits = c(0.005, 0.045)) +
   scale_fill_manual(values = c("#440154FF", "#39568CFF", "#1F968BFF", 
                                "#3CBB75FF", "#95D840FF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() +
-  labs (x = "Nitrogen:Phosphorus", y = "Average Abundance (Cells/l)", fill = "Year") +
+  labs (x = "Phosphorus (mg/l)", y = "Average Abundance (Cells/l)", fill = "Year") +
   facet_grid(rows = vars(species.avg))
