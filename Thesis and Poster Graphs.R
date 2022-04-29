@@ -89,7 +89,7 @@ nutlong <- transform(nutlong,
                      year = as.numeric(year))
 
 ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = N.P, y = abundance.avg)) +
-  geom_point(aes(fill = factor(year)), shape = 21, size = 2) +
+  geom_point(aes(fill = factor(year)), shape = 21, size = 3) +
   scale_x_continuous(limits = c(0, 8)) +
   scale_fill_manual(values = c("#440154FF", "#39568CFF", "#1F968BFF", 
                                "#3CBB75FF", "#95D840FF", "#FDE725FF")) +
