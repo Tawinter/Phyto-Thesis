@@ -3,14 +3,20 @@ library(tinytex)
 library(dplyr)
 library(tidyr)
 
+install.packages("viridis")
+library(viridis)
+
+install.packages("RColorBrewer")
+library(RColorBrewer)
+display.brewer.all(colorblindFriendly = TRUE)
+
 
 hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
 cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
 
 colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
 
-colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
-                  "Chlorophyl", "PAR", "Temp", "Salinity")
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", "Temp", "Salinity")
 
 cols <- c("2017"="red", "2018"="blue", "2019"="purple", "2020"="green", "2021"="black", "2022" = "orange")
 
@@ -22,6 +28,19 @@ cml_month <- cml %>%
 hampton_month <- hampton %>% 
   group_by(Year, Month) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+#Changing following 6 graphs into a panel of 6 graphs
+totalch <- read.csv("totalch.csv", stringsAsFactors = TRUE)
+
+ggplot(totalch, aes(x = Month, y = sum, color = factor(Year)))  + 
+  geom_point(size = 1.5) +
+  scale_color_viridis(discrete = TRUE) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
+                     labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  theme_bw() + 
+  labs(x = "Month", y = "Log Sum Abundance (Cells/l)", color = "Year") +
+  facet_grid(rows = vars(species), cols = vars(Location))
 
 #Graphs 6 total 3 per site and 1 per species, all years on one graph
 
