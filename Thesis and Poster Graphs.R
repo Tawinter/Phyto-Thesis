@@ -36,27 +36,27 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", "Temp", "Salinity")
 
-cml_sum <- cml %>% 
+cml_max <- cml %>% 
   group_by(Year) %>% 
-  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
 
-hampton_sum <- hampton %>% 
+hampton_max <- hampton %>% 
   group_by(Year) %>% 
-  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
 
 write.csv(cml_sum,'CML_Sum.csv', row.names = FALSE)
 write.csv(hampton_sum,'Hampton_Sum.csv', row.names = FALSE)
 
-sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
+maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
 
-sumch_1 <- gather(sumch, species, sum, Alex, Large_PN, Small_PN)
+maxch_1 <- gather(maxch, species, max, Alex, Large_PN, Small_PN)
 
-ggplot(sumch_1, aes(x = Year, y = sum))  + 
+ggplot(maxch_1, aes(x = Year, y = max))  + 
   geom_point(aes(fill = factor(species)), size = 3, shape = 21) +
   scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
-  labs(x = "Year", y = "Log Annual Sum (Cells/l)", fill = "Species") +
+  labs(x = "Year", y = "Log Max Abundance (Cells/l)", fill = "Species") +
   facet_grid(cols = vars(Location))
 
 #Are they co-occurring?
