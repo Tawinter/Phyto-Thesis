@@ -1,13 +1,37 @@
-Location,Year,Alex,Large_PN,Small_PN
-CML,2017,90,870,1230
-CML,2018,22.5,555,2010
-CML,2019,510,3225,2745
-CML,2020,30,9787.5,320000
-CML,2021,22.5,3247.5,1350
-CML,2022,0,75,877.5
-Hampton,2017,67.5,4342.5,3367.5
-Hampton,2018,45,1762.5,20850
-Hampton,2019,1807.5,4110,3307.5
-Hampton,2020,30,26767.5,1150000
-Hampton,2021,22.5,487.5,720
-Hampton,2022,7.5,577.5,232.5
+"Year","Station","Species","Max"
+2017,"UNH Pier","Alex",90
+2018,"UNH Pier","Alex",22.5
+2019,"UNH Pier","Alex",510
+2020,"UNH Pier","Alex",30
+2021,"UNH Pier","Alex",22.5
+2022,"UNH Pier","Alex",0
+2017,"HHHR2","Alex",67.5
+2018,"HHHR2","Alex",45
+2019,"HHHR2","Alex",1807.5
+2020,"HHHR2","Alex",30
+2021,"HHHR2","Alex",22.5
+2022,"HHHR2","Alex",7.5
+2017,"UNH Pier","Large_PN",870
+2018,"UNH Pier","Large_PN",555
+2019,"UNH Pier","Large_PN",3225
+2020,"UNH Pier","Large_PN",9787.5
+2021,"UNH Pier","Large_PN",3247.5
+2022,"UNH Pier","Large_PN",75
+2017,"HHHR2","Large_PN",4342.5
+2018,"HHHR2","Large_PN",1762.5
+2019,"HHHR2","Large_PN",4110
+2020,"HHHR2","Large_PN",26767.5
+2021,"HHHR2","Large_PN",487.5
+2022,"HHHR2","Large_PN",577.5
+2017,"UNH Pier","Small_PN",1230
+2018,"UNH Pier","Small_PN",2010
+2019,"UNH Pier","Small_PN",2745
+2020,"UNH Pier","Small_PN",320000
+2021,"UNH Pier","Small_PN",1350
+2022,"UNH Pier","Small_PN",877.5
+2017,"HHHR2","Small_PN",3367.5
+2018,"HHHR2","Small_PN",20850
+2019,"HHHR2","Small_PN",3307.5
+2020,"HHHR2","Small_PN",1150000
+2021,"HHHR2","Small_PN",720
+2022,"HHHR2","Small_PN",232.5

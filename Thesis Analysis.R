@@ -19,17 +19,39 @@ library(ggplot2)
 #Refer to Month Sums.R file for data manipulation
 totalch <- read.csv("totalch.csv", stringsAsFactors = TRUE)
 
+colnames(totalch)<- c("Station", "Year", "Month", "Species", "Sum")
+
+totalch <- 
+  totalch %>%
+  mutate_at("Station", str_replace, "CML", "UNH Pier")
+
+totalch <- 
+  totalch %>%
+  mutate_at("Station", str_replace, "Hampton", "HHHR2")
+
+mymonths <- c("Jan","Feb","Mar",
+              "Apr","May","Jun",
+              "Jul","Aug","Sep",
+              "Oct","Nov","Dec")
+
+totalch$MoAb <- mymonths[ totalch$Month ]
+
+write.csv(totalch,'totalch.csv', row.names = FALSE)
+
 #Dot plot of individual years
-ggplot(totalch, aes(x = Month, y = sum)) + 
+
+totalch$MoAb = factor(totalch$MoAb, levels = month.abb)
+
+ggplot(totalch, aes(x = MoAb, y = Sum)) + 
   geom_point(aes(fill = factor(Year)), size = 2, shape = 21) +
   scale_fill_manual(values = c("#440154FF", "#39568CFF", "#1F968BFF", 
                       "#3CBB75FF", "#95D840FF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_x_continuous(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
-                     labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
+  scale_x_discrete(limits = month.abb) +
   theme_bw() + 
+  theme(axis.text.x = element_text(angle=45)) +
   labs(x = "Month", y = "Log Sum Abundance (Cells/l)", fill = "Year") +
-  facet_grid(rows = vars(species), cols = vars(Location))
+  facet_grid(rows = vars(Species), cols = vars(Station))
 
 #Box and whisker of month sum, years combined using totalch.csv from previous graph
 setwd("D:/R/phyto-thesis")
@@ -52,27 +74,14 @@ hmol <- gather(hampton_mos, Species, Abundance, Alex, Large_PN, Small_PN)
 
 chmo <- rbind(cmol, hmol)
 
-class(chmo$Month)
-
-chmo$Month <- as.character(chmo$Month)
-
-chmo$Month <- as.numeric(chmo$Month)
-
-ggplot(chmo, aes(x = fct_inorder(Month), y = Abundance)) + 
-  geom_boxplot() +
-  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_x_discrete(breaks = c(1,2,3,4,5,6,7,8,9,10,11,12),
-                     labels = c("J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D")) +
-  theme_bw() + 
-  labs(x = "Month", y = "Log Abundance of Combined Years (Cells/l)") +
-  facet_grid(rows = vars(Species), cols = vars(Station), scales = "free_y")
-
 mymonths <- c("Jan","Feb","Mar",
               "Apr","May","Jun",
               "Jul","Aug","Sep",
               "Oct","Nov","Dec")
 
 chmo$MoAb <- mymonths[ chmo$Month ]
+
+write.csv(chmo,'ch_boxplot.csv', row.names = FALSE)
 
 chmo$MoAb = factor(chmo$MoAb, levels = month.abb)
 
@@ -96,30 +105,56 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", "Temp", "Salinity")
 
+#Two panel graph with max of all species and years on a single graph, locations separate
+
 cml_max <- cml %>% 
-  group_by(Year) %>% 
+  group_by(Year, Station) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
 
 hampton_max <- hampton %>% 
-  group_by(Year) %>% 
+  group_by(Year, Station) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), max, na.rm = TRUE)
 
-write.csv(cml_max,'CML_Max.csv', row.names = FALSE)
-write.csv(hampton_max,'Hampton_Max.csv', row.names = FALSE)
+maxch <- rbind(cml_max, hampton_max)
 
-#manually combined the two datasets in excel to create maxch dataset
+maxch <- gather(maxch, Species, Max, Alex, Large_PN, Small_PN)
+
+write.csv(maxch,'maxch.csv', row.names = FALSE)
 
 maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
 
-maxch_1 <- gather(maxch, species, max, Alex, Large_PN, Small_PN)
-
-ggplot(maxch_1, aes(x = Year, y = max))  + 
-  geom_point(aes(fill = factor(species)), size = 3, shape = 21) +
+ggplot(maxch, aes(x = Year, y = Max))  + 
+  geom_point(aes(fill = factor(Species)), size = 3, shape = 21) +
   scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
   labs(x = "Year", y = "Log Max Abundance (Cells/l)", fill = "Species") +
-  facet_grid(cols = vars(Location))
+  facet_grid(cols = vars(Station))
+
+#Two panel graph with sum of all species and years on a single graph, locations separate
+cml_sum <- cml %>% 
+  group_by(Year, Station) %>% 
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+hampton_sum <- hampton %>% 
+  group_by(Year, Station) %>% 
+  summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+sumch <- rbind(cml_sum, hampton_sum)
+
+sumch <- gather(sumch, Species, Sum, Alex, Large_PN, Small_PN)
+
+write.csv(sumch,'sumch.csv', row.names = FALSE)
+
+sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
+
+ggplot(sumch, aes(x = Year, y = Sum))  + 
+  geom_point(aes(fill = factor(Species)), size = 3, shape = 21) +
+  scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
+  scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
+  theme_bw() + 
+  labs(x = "Year", y = "Log Max Abundance (Cells/l)", fill = "Species") +
+  facet_grid(cols = vars(Station))
 
 
 #Are they co-occurring?
@@ -127,11 +162,21 @@ library(ggtext)
 
 combch <- read.csv("combinedch.csv" , stringsAsFactors = TRUE)
 
-colnames(combch)<- c("Week", "Month", "Day", "Year", "Location", "Alex", "Large_PN", "Small_PN")
+colnames(combch)<- c("Week", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
 
 comb <- gather(combch, size_class, abundance, Large_PN, Small_PN)
 
-ggplot(comb, aes(x = abundance, y = Alex))  + 
+comb <- 
+  comb %>%
+  mutate_at("Station", str_replace, "CML", "UNH Pier")
+
+comb <- 
+  comb %>%
+  mutate_at("Station", str_replace, "Hampton", "HHHR2")
+
+write.csv(comb, "combinedch.csv", row.names = FALSE)
+
+ggplot(combch, aes(x = abundance, y = Alex))  + 
   geom_point(size = 2) +
   scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
@@ -139,7 +184,7 @@ ggplot(comb, aes(x = abundance, y = Alex))  +
   labs(x = "Log *Pseudo-nitzschia* Abundance (Cells/l)", y = "Log *Alexandrium* Abundance (Cells/l)") +
   theme(axis.title.x = ggtext::element_markdown()) +
   theme(axis.title.y = ggtext::element_markdown()) +
-  facet_grid(rows = vars(size_class), cols = vars(Location))
+  facet_grid(rows = vars(size_class), cols = vars(Station))
 
 
 
