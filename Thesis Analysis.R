@@ -187,15 +187,28 @@ ggplot(combch, aes(x = abundance, y = Alex))  +
   facet_grid(rows = vars(size_class), cols = vars(Station))
 
 
+#Filtering out zeros to get count for co occurance table
+cooccur <- combch %>% filter(Alex > 0, abundance > 0)
 
+table(cooccur$Station, cooccur$size_class, cooccur$Year)
 
+#Regression of co ocurrance
+install.packages("broom")
+install.packages("ggpubr")
 
+library(ggplot2)
+library(dplyr)
+library(broom)
+library(ggpubr)
 
+summary(combch)
 
+#Rule 1 Independence of observations, no count observed twice TRUE
 
+#Rule 2 Normality, does dependent variable have a normal distribution FALSE
+hist(combch$Alex)
 
-
-
+#Rule 3 
 
 
 
