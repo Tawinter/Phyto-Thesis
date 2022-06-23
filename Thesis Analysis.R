@@ -188,27 +188,54 @@ ggplot(combch, aes(x = abundance, y = Alex))  +
 
 
 #Filtering out zeros to get count for co occurance table
-cooccur <- combch %>% filter(Alex > 0, abundance > 0)
+coocur <- combch %>% filter(Alex > 0, abundance > 0)
 
 table(cooccur$Station, cooccur$size_class, cooccur$Year)
 
 #Regression of co ocurrance
 install.packages("broom")
 install.packages("ggpubr")
+install.packages("rpud")
+install.packages("DescTools")
 
 library(ggplot2)
 library(dplyr)
 library(broom)
 library(ggpubr)
+library(rpud)
+library(DescTools)
 
-summary(combch)
+#Spearman rank correlation as the data is not normally distributed
+  #Attempted a spearman but there were ties and the p-value could not be calculated correctly
 
-#Rule 1 Independence of observations, no count observed twice TRUE
+#Kendall test running all the data
+cor.test(coocur$abundance,coocur$Alex, method="kendall")
 
-#Rule 2 Normality, does dependent variable have a normal distribution FALSE
-hist(combch$Alex)
+ktball <- KendallTauB(coocur$abundance, coocur$Alex)
 
-#Rule 3 
+#Tau-b test for small PN
+
+smco <- coocur %>% filter(size_class == "Small_PN")
+
+ktbsm <- KendallTauB(smco$abundance,smco$Alex)
+
+
+#Tau-b for large PN
+
+lgco <- coocur %>% filter(size_class == "Large_PN")
+
+ktblg <- KendallTauB(lgco$abundance,lgco$Alex)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
