@@ -176,12 +176,20 @@ comb <-
 
 write.csv(comb, "combinedch.csv", row.names = FALSE)
 
+combch %>% mutate(Group =
+                     case_when(Alex ~ "A", 
+                               DeprIndex <= 20 ~ "B",
+                               DeprIndex >= 21 ~ "C")
+)
+
+pal <- c("Alex" = "#39568CFF", "PN" = "#3CBB75FF", "PNSA" = "#440154FF", "PNLA" = "#FDE725FF", "NONE" = "black")
+
 ggplot(combch, aes(x = abundance, y = Alex))  + 
   geom_point(size = 2) +
   scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
-  labs(x = "Log *Pseudo-nitzschia* Abundance (Cells/l)", y = "Log *Alexandrium* Abundance (Cells/l)") +
+  labs(x = "Log *Pseudo-nitzschia* abundance (cells/l)", y = "Log *Alexandrium* abundance (cells/l)") +
   theme(axis.title.x = ggtext::element_markdown()) +
   theme(axis.title.y = ggtext::element_markdown()) +
   facet_grid(rows = vars(size_class), cols = vars(Station))
