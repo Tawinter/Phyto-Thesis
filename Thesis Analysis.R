@@ -50,7 +50,9 @@ ggplot(totalch, aes(x = MoAb, y = Sum)) +
   scale_x_discrete(limits = month.abb) +
   theme_bw() + 
   theme(axis.text.x = element_text(angle=45)) +
-  labs(x = "Month", y = "Log Sum Abundance (Cells/l)", fill = "Year") +
+  labs(fill = "Year") +
+  xlab('Month')+
+  ylab(bquote('Log sum abundance '(cells~L^-1))) +
   facet_grid(rows = vars(Species), cols = vars(Station))
 
 #Box and whisker of month sum, years combined using totalch.csv from previous graph
@@ -83,6 +85,8 @@ chmo$MoAb <- mymonths[ chmo$Month ]
 
 write.csv(chmo,'ch_boxplot.csv', row.names = FALSE)
 
+chmo <- read.csv("ch_boxplot.csv", stringsAsFactors = TRUE)
+
 chmo$MoAb = factor(chmo$MoAb, levels = month.abb)
 
 ggplot(chmo, aes(x = MoAb, y = Abundance)) + 
@@ -90,7 +94,8 @@ ggplot(chmo, aes(x = MoAb, y = Abundance)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_x_discrete(limits = month.abb) +
   theme_bw() + 
-  labs(x = "Month", y = "Log Abundance of Combined Years (Cells/l)") +
+  xlab('Month')+
+  ylab(bquote('Log abundance of combined years '(cells~L^-1))) +
   facet_grid(rows = vars(Species), cols = vars(Station), scales = "free_y")
 
 
@@ -128,10 +133,12 @@ ggplot(maxch, aes(x = Year, y = Max))  +
   scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
-  labs(x = "Year", y = "Log Max Abundance (Cells/l)", fill = "Species") +
+  labs(fill = "Species") +
+  xlab('Year')+
+  ylab(bquote('Log max abundance '(cells~L^-1))) +
   facet_grid(cols = vars(Station))
 
-#Two panel graph with sum of all species and years on a single graph, locations separate
+#Two panel graph with sum of all species and years on a single graph, locations separate DIDN'T USE
 cml_sum <- cml %>% 
   group_by(Year, Station) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
@@ -176,22 +183,13 @@ comb <-
 
 write.csv(comb, "combinedch.csv", row.names = FALSE)
 
-combch %>% mutate(Group =
-                     case_when(Alex ~ "A", 
-                               DeprIndex <= 20 ~ "B",
-                               DeprIndex >= 21 ~ "C")
-)
-
-pal <- c("Alex" = "#39568CFF", "PN" = "#3CBB75FF", "PNSA" = "#440154FF", "PNLA" = "#FDE725FF", "NONE" = "black")
-
 ggplot(combch, aes(x = abundance, y = Alex))  + 
   geom_point(size = 2) +
   scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
-  labs(x = "Log *Pseudo-nitzschia* abundance (cells/l)", y = "Log *Alexandrium* abundance (cells/l)") +
-  theme(axis.title.x = ggtext::element_markdown()) +
-  theme(axis.title.y = ggtext::element_markdown()) +
+  xlab(expression(paste("Log ", italic("Pseudo-nitzschia "), "abundance ", (cells~L^-1))))+
+  ylab(expression(paste("Log ", italic("Alexandrium "), "abundance ", (cells~L^-1))))+
   facet_grid(rows = vars(size_class), cols = vars(Station))
 
 
