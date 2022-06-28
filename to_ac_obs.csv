@@ -1,0 +1,36 @@
+"Year","Station","Species","Total_obs","Actual_obs"
+2017,"UNH Pier","Alex",45,11
+2017,"UNH Pier","Large_PN",45,15
+2017,"UNH Pier","Small_PN",45,21
+2018,"UNH Pier","Alex",51,8
+2018,"UNH Pier","Large_PN",51,24
+2018,"UNH Pier","Small_PN",51,25
+2019,"UNH Pier","Alex",44,13
+2019,"UNH Pier","Large_PN",44,14
+2019,"UNH Pier","Small_PN",44,16
+2020,"UNH Pier","Alex",48,5
+2020,"UNH Pier","Large_PN",48,28
+2020,"UNH Pier","Small_PN",48,36
+2021,"UNH Pier","Alex",44,7
+2021,"UNH Pier","Large_PN",44,17
+2021,"UNH Pier","Small_PN",44,13
+2022,"UNH Pier","Large_PN",7,4
+2022,"UNH Pier","Small_PN",7,2
+2017,"HHHR2","Alex",45,11
+2017,"HHHR2","Large_PN",43,20
+2017,"HHHR2","Small_PN",42,24
+2018,"HHHR2","Alex",51,6
+2018,"HHHR2","Large_PN",51,29
+2018,"HHHR2","Small_PN",51,25
+2019,"HHHR2","Alex",44,15
+2019,"HHHR2","Large_PN",43,22
+2019,"HHHR2","Small_PN",44,21
+2020,"HHHR2","Alex",48,1
+2020,"HHHR2","Large_PN",48,31
+2020,"HHHR2","Small_PN",48,43
+2021,"HHHR2","Alex",27,3
+2021,"HHHR2","Large_PN",27,10
+2021,"HHHR2","Small_PN",27,6
+2022,"HHHR2","Alex",6,1
+2022,"HHHR2","Large_PN",6,6
+2022,"HHHR2","Small_PN",6,1

@@ -1,20 +1,20 @@
 #Thesis Analysis
 
 library(ggplot2)
-#library(tinytex)
 library(dplyr)
 library(tidyr)
-#library(formattable)
 library(forcats)
 library(tidyverse)
-#library(viridis)
 library(ggtext)
-#library(hexbin)
+library(ggpubr)
+library(formattable)
+library(scales)
+library(lubridate)
+
 
 ############General Trend Graphs Beings Here#########################
 
 #Q.1 Seasonal Pattern Graphs
-library(ggplot2)
 
 #Refer to Month Sums.R file for data manipulation
 totalch <- read.csv("totalch.csv", stringsAsFactors = TRUE)
@@ -100,8 +100,6 @@ ggplot(chmo, aes(x = MoAb, y = Abundance)) +
 
 
 #How are the populations changing over time?
-library(dplyr)
-library(tidyr)
 
 hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
 cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
@@ -138,6 +136,29 @@ ggplot(maxch, aes(x = Year, y = Max))  +
   ylab(bquote('Log max abundance '(cells~L^-1))) +
   facet_grid(cols = vars(Station))
 
+
+#Finding percentage of sum that the max takes up and creating graph NO TABLE
+maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
+sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
+
+smch <- cbind(sumch, maxch)
+
+smch <- smch[, c('Year', 'Station', 'Species', 'Sum', 'Max')]
+
+perch <- group_by(smch, Year, Station, Species) %>% mutate(Percent = Max/Sum)
+
+write.csv(perch,'percentage_maxsum.csv', row.names = FALSE)
+
+perch <- read.csv("percentage_maxsum.csv" , stringsAsFactors = TRUE)
+
+ggplot(data = subset(perch, !is.na(Percent)), aes(x= Year, y = Percent)) + 
+  geom_point(stat = "identity") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_bw() + 
+  labs(x = "Year", y = "Percentage max of sum")+
+  facet_grid(rows = vars(Species), cols = vars(Station))
+
+
 #Two panel graph with sum of all species and years on a single graph, locations separate DIDN'T USE
 cml_sum <- cml %>% 
   group_by(Year, Station) %>% 
@@ -165,7 +186,6 @@ ggplot(sumch, aes(x = Year, y = Sum))  +
 
 
 #Are they co-occurring?
-library(ggtext)
 
 combch <- read.csv("combinedch.csv" , stringsAsFactors = TRUE)
 
@@ -192,24 +212,12 @@ ggplot(combch, aes(x = abundance, y = Alex))  +
   ylab(expression(paste("Log ", italic("Alexandrium "), "abundance ", (cells~L^-1))))+
   facet_grid(rows = vars(size_class), cols = vars(Station))
 
-
 #Filtering out zeros to get count for co occurance table
 coocur <- combch %>% filter(Alex > 0, abundance > 0)
 
 table(cooccur$Station, cooccur$size_class, cooccur$Year)
 
 #Regression of co ocurrance
-install.packages("broom")
-install.packages("ggpubr")
-install.packages("rpud")
-install.packages("DescTools")
-
-library(ggplot2)
-library(dplyr)
-library(broom)
-library(ggpubr)
-library(rpud)
-library(DescTools)
 
 #Spearman rank correlation as the data is not normally distributed
   #Attempted a spearman but there were ties and the p-value could not be calculated correctly
@@ -217,33 +225,78 @@ library(DescTools)
 #Kendall test running all the data
 cor.test(coocur$abundance,coocur$Alex, method="kendall")
 
-ktball <- KendallTauB(coocur$abundance, coocur$Alex)
 
-#Tau-b test for small PN
+#How many times does they appear vs how many total samples there were
+##Loading in basic dataframes
+hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
+cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
 
-smco <- coocur %>% filter(size_class == "Small_PN")
+#column name change
+colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
 
-ktbsm <- KendallTauB(smco$abundance,smco$Alex)
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", "Temp", "Salinity")
 
+#Keeping specific columns
+cmlc <- cml[ , c("Year", "Station", "Alex", "Large_PN", "Small_PN")]
 
-#Tau-b for large PN
+hamptonc <- hampton[ , c("Year", "Station", "Alex", "Large_PN", "Small_PN")]
 
-lgco <- coocur %>% filter(size_class == "Large_PN")
+#Turning into long data
+cmlc <- gather(cmlc, Species, Abundance, Alex, Large_PN, Small_PN)
 
-ktblg <- KendallTauB(lgco$abundance,lgco$Alex)
+hamptonc <- gather(hamptonc, Species, Abundance, Alex, Large_PN, Small_PN)
 
+#Dropping NA values
+cmlc <- cmlc %>% drop_na()
 
+hamptonc <- hamptonc %>% drop_na()
 
+#Counting total observations
+c_total <- cmlc %>% count(Year, Station, Species)
 
+h_total <- hamptonc %>% count(Year, Station, Species)
 
+#Renaming columns
+colnames(c_total)<- c("Year", "Species", "Station", "Total_obs")
 
+colnames(h_total)<- c("Year", "Species", "Station", "Total_obs")
 
+#Counting only >0 observations
+c_obs <- cmlc %>% count(Year, Station, Species, Abundance > 0)
 
+h_obs <- hamptonc %>% count(Year, Station, Species, Abundance > 0)
 
+#Deleting false rows
+c_obs <- c_obs[c_obs$`Abundance > 0` != "FALSE", ]
 
+h_obs <- h_obs[h_obs$`Abundance > 0` != "FALSE", ]
 
+#Keeping Specific columns
+c_obs <- c_obs[ , c("Year", "Station", "Species", "n")]
 
+h_obs <- h_obs[ , c("Year", "Station", "Species", "n")]
 
+#Renaming n column
+colnames(c_obs)<- c("Year", "Station", "Species", "Actual_obs")
+
+colnames(h_obs)<- c("Year", "Station", "Species", "Actual_obs")
+
+#Joining the dataframes
+tobsch <- rbind(c_total, h_total)
+tobsch <- tobsch[-c(16), ]
+
+aobsch <- rbind(c_obs, h_obs)
+
+taobs <- cbind(tobsch, aobsch)
+
+#Keeping specific columns and renaming
+taobs <- taobs[ , c("Year", "Species", "Station", "Total_obs", "Actual_obs")]
+
+colnames(taobs) <- c("Year", "Station", "Species", "Total_obs", "Actual_obs")
+
+write.csv(taobs, "to_ac_obs.csv", row.names = FALSE)
+
+taobs <- read.csv("to_ac_obs.csv" , stringsAsFactors = TRUE)
 
 
 
