@@ -108,7 +108,7 @@ colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex",
 
 colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", "Temp", "Salinity")
 
-#Two panel graph with max of all species and years on a single graph, locations separate
+#Two panel graph with max of all species and years on a single graph, locations separate, DIDN'T USE
 
 cml_max <- cml %>% 
   group_by(Year, Station) %>% 
@@ -137,29 +137,7 @@ ggplot(maxch, aes(x = Year, y = Max))  +
   facet_grid(cols = vars(Station))
 
 
-#Finding percentage of sum that the max takes up and creating graph NO TABLE
-maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
-sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
-
-smch <- cbind(sumch, maxch)
-
-smch <- smch[, c('Year', 'Station', 'Species', 'Sum', 'Max')]
-
-perch <- group_by(smch, Year, Station, Species) %>% mutate(Percent = Max/Sum)
-
-write.csv(perch,'percentage_maxsum.csv', row.names = FALSE)
-
-perch <- read.csv("percentage_maxsum.csv" , stringsAsFactors = TRUE)
-
-ggplot(data = subset(perch, !is.na(Percent)), aes(x= Year, y = Percent)) + 
-  geom_point(stat = "identity") +
-  scale_y_continuous(labels = scales::percent) +
-  theme_bw() + 
-  labs(x = "Year", y = "Percentage max of sum")+
-  facet_grid(rows = vars(Species), cols = vars(Station))
-
-
-#Two panel graph with sum of all species and years on a single graph, locations separate DIDN'T USE
+#Two panel graph with sum of all species and years on a single graph, locations separate
 cml_sum <- cml %>% 
   group_by(Year, Station) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
@@ -181,7 +159,9 @@ ggplot(sumch, aes(x = Year, y = Sum))  +
   scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
-  labs(x = "Year", y = "Log Max Abundance (Cells/l)", fill = "Species") +
+  labs(fill = "Species") +
+  xlab('Year')+
+  ylab(bquote('Log max abundance '(cells~L^-1))) +
   facet_grid(cols = vars(Station))
 
 
@@ -204,7 +184,7 @@ comb <-
 write.csv(comb, "combinedch.csv", row.names = FALSE)
 
 ggplot(combch, aes(x = abundance, y = Alex))  + 
-  geom_point(size = 2) +
+  geom_point(size = 3) +
   scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
@@ -224,6 +204,28 @@ table(cooccur$Station, cooccur$size_class, cooccur$Year)
 
 #Kendall test running all the data
 cor.test(coocur$abundance,coocur$Alex, method="kendall")
+
+
+#Finding percentage of sum that the max takes up and creating graph NO TABLE
+maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
+sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
+
+smch <- cbind(sumch, maxch)
+
+smch <- smch[, c('Year', 'Station', 'Species', 'Sum', 'Max')]
+
+perch <- group_by(smch, Year, Station, Species) %>% mutate(Percent = Max/Sum)
+
+write.csv(perch,'percentage_maxsum.csv', row.names = FALSE)
+
+perch <- read.csv("percentage_maxsum.csv" , stringsAsFactors = TRUE)
+
+ggplot(data = subset(perch, !is.na(Percent)), aes(x= Year, y = Percent)) + 
+  geom_point(size = 3, stat = "identity") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_bw() + 
+  labs(x = "Year", y = "Percentage max of sum")+
+  facet_grid(rows = vars(Species), cols = vars(Station))
 
 
 #How many times does they appear vs how many total samples there were
@@ -298,8 +300,16 @@ write.csv(taobs, "to_ac_obs.csv", row.names = FALSE)
 
 taobs <- read.csv("to_ac_obs.csv" , stringsAsFactors = TRUE)
 
+ptaobs <- group_by(taobs, Year, Station, Species) %>% mutate(Percent = Actual_obs/Total_obs)
 
+write.csv(ptaobs, "percent_ta_obs.csv", row.names = FALSE)
 
+ggplot(data = ptaobs, aes(x= Year, y = Percent)) + 
+  geom_point(size = 3, stat = "identity") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_bw() + 
+  labs(x = "Year", y = "Percentage times observed of total samples")+
+  facet_grid(rows = vars(Species), cols = vars(Station))
 
 
 
