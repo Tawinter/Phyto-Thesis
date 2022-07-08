@@ -10,6 +10,11 @@ library(ggpubr)
 library(formattable)
 library(scales)
 library(lubridate)
+library(nlme)
+library(lemon)
+library(DescTools)
+
+
 
 
 ############General Trend Graphs Beings Here#########################
@@ -161,7 +166,7 @@ ggplot(sumch, aes(x = Year, y = Sum))  +
   theme_bw() + 
   labs(fill = "Species") +
   xlab('Year')+
-  ylab(bquote('Log max abundance '(cells~L^-1))) +
+  ylab(bquote('Log sum abundance '(cells~L^-1))) +
   facet_grid(cols = vars(Station))
 
 
@@ -185,17 +190,20 @@ write.csv(comb, "combinedch.csv", row.names = FALSE)
 
 ggplot(combch, aes(x = abundance, y = Alex))  + 
   geom_point(size = 3) +
+  geom_smooth(method="lm", se=FALSE, linetype = 'dashed', fullrange = TRUE) +
   scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
   xlab(expression(paste("Log ", italic("Pseudo-nitzschia "), "abundance ", (cells~L^-1))))+
   ylab(expression(paste("Log ", italic("Alexandrium "), "abundance ", (cells~L^-1))))+
-  facet_grid(rows = vars(size_class), cols = vars(Station))
+  facet_rep_wrap(~ interaction(size_class, Station), scales='free_x', repeat.tick.labels = 'bottom')
+
+facet_grid(rows = vars(size_class), cols = vars(Station), scales = "free_x", repeat.tick.label = "bottom")
 
 #Filtering out zeros to get count for co occurance table
 coocur <- combch %>% filter(Alex > 0, abundance > 0)
 
-table(cooccur$Station, cooccur$size_class, cooccur$Year)
+table(coocur$Station, coocur$size_class, coocur$Year)
 
 #Regression of co ocurrance
 
@@ -204,6 +212,35 @@ table(cooccur$Station, cooccur$size_class, cooccur$Year)
 
 #Kendall test running all the data
 cor.test(coocur$abundance,coocur$Alex, method="kendall")
+
+#Running four individual Kendall tests for each graph
+#LPN at HHHR2
+lh_alex <- coocur %>% filter(Station == "HHHR2", size_class == "Large_PN")
+
+cor.test(lh_alex$abundance, lh_alex$Alex, method="kendall")
+
+KendallTauB(lh_alex$abundance,lh_alex$Alex)
+
+
+sh_alex <- coocur %>% filter(Station == "HHHR2", size_class == "Small_PN")
+
+cor.test(sh_alex$abundance, sh_alex$Alex, method="kendall")
+
+KendallTauB(sh_alex$abundance,sh_alex$Alex)
+
+
+lu_alex <- coocur %>% filter(Station == "UNH Pier", size_class == "Large_PN")
+
+cor.test(lu_alex$abundance, lu_alex$Alex, method="kendall")
+
+KendallTauB(lu_alex$abundance,lu_alex$Alex)
+
+
+su_alex <- coocur %>% filter(Station == "UNH Pier", size_class == "Small_PN")
+
+cor.test(su_alex$abundance, su_alex$Alex, method="kendall")
+
+KendallTauB(su_alex$abundance,su_alex$Alex)
 
 
 #Finding percentage of sum that the max takes up and creating graph NO TABLE
