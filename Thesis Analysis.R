@@ -198,7 +198,7 @@ ggplot(combch, aes(x = abundance, y = Alex))  +
   ylab(expression(paste("Log ", italic("Alexandrium "), "abundance ", (cells~L^-1))))+
   facet_rep_wrap(~ interaction(size_class, Station), scales='free_x', repeat.tick.labels = 'bottom')
 
-facet_grid(rows = vars(size_class), cols = vars(Station), scales = "free_x", repeat.tick.label = "bottom")
+
 
 #Filtering out zeros to get count for co occurance table
 coocur <- combch %>% filter(Alex > 0, abundance > 0)
