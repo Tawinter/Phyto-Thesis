@@ -14,6 +14,10 @@ library(nlme)
 library(lemon)
 library(DescTools)
 library(viridis)
+library(mblm)
+
+install.packages("mblm")
+
 
 
 ############General Trend Graphs Beings Here#########################
@@ -359,14 +363,16 @@ ggplot(data = ptaobs, aes(x= Year, y = Percent)) +
 
 
 #######################Nutrient Graph Begins Here#######################
+
+#Data frame corrections and manipulations
 nutlong <- read.csv("CML_Nut_Long.csv" , stringsAsFactors = TRUE)
 
-#Graphing sum and average against temperature
-nutlong <- nutlong %>%
-  separate(fct_inorder.MY., sep="-", into = c("month", "Year"))
+nutlong <- subset( nutlong, select = -c(species.sum, abundance.sum ) )
 
-nutlong <- transform(nutlong,
-                     Year = as.numeric(Year))
+nutlong <- subset( nutlong, select = -c(silica ) )
+
+nutlong1 <- nutlong %>%
+  distinct(.keep_all = TRUE)
 
 nutlong$species.avg <- as.character(nutlong$species.avg)
 
@@ -376,12 +382,22 @@ nutlong[nutlong == "Large_PN.avg."] <- "Large_PN"
 
 nutlong[nutlong == "Small_PN.avg."] <- "Small_PN"
 
+nutlong <- nutlong[nutlong$Year != 2022, ]
+
+nutlong <- nutlong %>%
+  separate(fct_inorder.MY., sep="-", into = c("month", "Year"))
+
+nutlong <- transform(nutlong,
+                     Year = as.numeric(Year))
+
+write.csv(nutlong,'CML_Nut_Long.csv', row.names = FALSE)
+
+#Graphing avg against temp
 alab <- expression('Temperature ('*degree*C*')')
 
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = temperature, y = abundance.avg,
-                                                     color = Year)) +
-  geom_point(size = 2.5) +
-  scale_color_viridis() +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = temperature, y = abundance.avg)) +
+  geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
+  scale_fill_viridis() +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_x_continuous(breaks=seq(0,24,2)) +
   theme_bw() +
@@ -390,11 +406,10 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = temperature, y = abunda
   facet_grid(rows = vars(species.avg))
 
 #Graphing average abundance against salinity
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = salinity, y = abundance.avg, 
-                                                     color = Year)) +
-  geom_point(size = 2.5) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = salinity, y = abundance.avg)) +
+  geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_color_viridis() +
+  scale_fill_viridis() +
   scale_x_continuous(breaks=seq(12,36,2)) +
   theme_bw() +
   xlab('Salinity (ppt)')+
@@ -402,23 +417,21 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = salinity, y = abundance
   facet_grid(rows = vars(species.avg))
 
 #Graphing against nitrogen
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = nitrogen, y = abundance.avg, 
-                                                     color = Year)) +
-  geom_point(size = 2.5) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = nitrogen, y = abundance.avg)) +
+  geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
   scale_x_continuous(limits = c(0, 0.16), breaks = seq(0, 0.16, 0.02)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_color_viridis() +
+  scale_fill_viridis() +
   theme_bw() +
   xlab(bquote('Nitrogen ' ~(mg~L^-1)))+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
 
 #Graphin average abundance against phosphorus
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = phosphorus, y = abundance.avg, 
-                                                     color = Year)) +
-  geom_point(size = 2.5) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = phosphorus, y = abundance.avg)) +
+  geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_color_viridis() +
+  scale_fill_viridis() +
   scale_x_continuous(breaks = seq(0,0.04, 0.005)) +
   theme_bw() +
   xlab(bquote('Phosphorus ' ~(mg~L^-1)))+
@@ -426,24 +439,22 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = phosphorus, y = abundan
   facet_grid(rows = vars(species.avg))
 
 ##Poster Graph Nitrogen:Phosphorus
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = N.P, y = abundance.avg, 
-                                                     color = Year)) +
-  geom_point(size = 2.5) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = N.P, y = abundance.avg)) +
+  geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
   scale_x_continuous(limits = c(0, 8), breaks = seq(0,8,1)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_color_viridis() +
+  scale_fill_viridis() +
   theme_bw() +
   xlab('Nitrogen:Phosphorus')+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
 
 #Graphing against tss
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = tss, y = abundance.avg, 
-                                                     color = Year)) +
-  geom_point(size = 2.5) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = tss, y = abundance.avg)) +
+  geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
   scale_x_continuous(limits = c(10, 24), breaks = seq(10,24,2)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_color_viridis() +
+  scale_fill_viridis() +
   theme_bw() +
   xlab(bquote('Total suspended solids ' ~(mg~L^-1)))+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
@@ -452,13 +463,37 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = tss, y = abundance.avg,
 #Graphing against chla
 blab <- expression('Chlorophyll a (' *mu*g/l*')')
 
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg, 
-                                                     color = Year)) +
-  geom_point(size = 2.5) +
+ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg)) +
+  geom_point(size = 2.5, shape =21, aes(fill = Year)) +
   scale_x_continuous(limits = c(0,20), breaks = seq(0,20,2)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
-  scale_color_viridis() +
+  scale_fill_viridis() +
   theme_bw() +
   xlab(bquote('Chlorophyll ' ~(mu*L^-1)))+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
+
+
+#Regression on abundance vs. chla and N:P
+#Histograms determine they are nonparametric
+
+#Abundance vs chla
+chla_alex <- nutlong %>% filter(species.avg == "Alex")
+
+chla_alex <- chla_alex[-c(58,59), ]
+
+chla_alex <- chla_alex[ , c("chla", "species.avg", "abundance.avg")]   
+
+chla_alex <- na.omit(chla_alex)
+
+rch_alex = mblm(abundance.avg ~ chla,
+               data= chla_alex, repeated = FALSE)
+
+summary(rch_alex)
+
+
+cnp_pnl <- nutlong %>% filter(species.avg == "Large_PN")
+
+
+
+cnp_pns <- nutlong %>% filter(species.avg == "Small_PN")
