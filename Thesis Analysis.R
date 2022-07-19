@@ -15,8 +15,7 @@ library(lemon)
 library(DescTools)
 library(viridis)
 library(mblm)
-
-install.packages("mblm")
+library(pls)
 
 
 
@@ -473,6 +472,133 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
 
+
+
+
+
+
+
+#Testing variables for normality for PLS analysis
+hist(nutlong$phosphorus) #positive skew
+hist(nutlong$tss) #no/positive skew, very little data
+hist(nutlong$chla) #positive skew/outlier
+hist(nutlong$nitrogen) #positive skew/outlier
+hist(nutlong$salinity) #negative skew
+hist(nutlong$temperature) #negative skew
+hist(nutlong$N.P) #normal to positive skew
+hist(nutlong$abundance.avg) #outliers making no skew
+
+#Separating into a file for each species
+nuts <- read.csv("CML_Nut_Long.csv" , stringsAsFactors = TRUE)
+
+#Alex
+alexnut <- subset(nuts, species.avg == 'Alex',
+                             select=c(phosphorus, tss, chla, nitrogen, salinity, temperature,
+                                      N.P, abundance.avg))
+
+alexnut <- alexnut[-c(58,59), ] #removed since NA for abundance data
+
+#Small_PN
+smallnut <- subset(nuts, species.avg == 'Small_PN',
+                  select=c(phosphorus, tss, chla, nitrogen, salinity, temperature,
+                           N.P, abundance.avg))
+
+smallnut <- smallnut[-c(58,59),]
+
+#Large_PN
+largenut <- subset(nuts, species.avg == 'Large_PN',
+                   select=c(phosphorus, tss, chla, nitrogen, salinity, temperature,
+                            N.P, abundance.avg))
+
+largenut <- largenut[-c(58,59),]
+
+
+#Taking the log of data and checking skews for Alex
+alexlog <- log1p(alexnut)
+
+hist(alexlog$phosphorus) 
+hist(alexlog$tss) 
+hist(alexlog$chla) 
+hist(alexlog$nitrogen) 
+hist(alexlog$salinity) 
+hist(alexlog$temperature) 
+hist(alexlog$N.P) 
+hist(alexlog$abundance.avg) 
+
+
+#Taking the log of data and checking skews for small PN
+smalllog <- log1p(smallnut)
+
+hist(smalllog$phosphorus) 
+hist(smalllog$tss) 
+hist(smalllog$chla) 
+hist(smalllog$nitrogen) 
+hist(smalllog$salinity) 
+hist(smalllog$temperature) 
+hist(smalllog$N.P) 
+hist(smalllog$abundance.avg) 
+
+#Taking the log of the data and checking skews for large PN
+largelog <- log1p(largenut)
+
+hist(largelog$phosphorus) 
+hist(largelog$tss) 
+hist(largelog$chla) 
+hist(largelog$nitrogen) 
+hist(largelog$salinity) 
+hist(largelog$temperature) 
+hist(largelog$N.P) 
+hist(largelog$abundance.avg) 
+
+
+
+#Performing the PLS for Alex
+set.seed(10)
+
+plsalex <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+tss+chla, 
+             na.action = na.omit, data=alexlog, scale=TRUE, validation="LOO")
+
+summary(plsalex)
+
+validationplot(plsalex)
+validationplot(plsalex, val.type="MSEP")
+validationplot(plsalex, val.type="R2")
+
+#Performing the PLS for Small_PN
+set.seed(10)
+
+plsSmall <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+tss+chla, 
+                na.action = na.omit, data=smalllog, scale=TRUE, validation="LOO")
+
+summary(plsSmall)
+
+validationplot(plsSmall)
+validationplot(plsSmall, val.type="MSEP")
+validationplot(plsSmall, val.type="R2")
+
+#Performing the PLS for Large_PN
+set.seed(10)
+
+plslarge <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+tss+chla, 
+                 na.action = na.omit, data=largelog, scale=TRUE, validation="LOO")
+
+summary(plslarge)
+
+validationplot(plslarge)
+validationplot(plslarge, val.type="MSEP")
+validationplot(plslarge, val.type="R2")
+
+
+#Non-parametric test
+install.packages("plsRglm")
+library(plsRglm)
+
+Xalex<-alexlog[,1:7]
+yalex<-alexlog[,8]
+
+nPlsAlex <- plsRglm(yalex, xalex, 10)
+
+summary(nPlsAlex)
 
 #Regression on abundance vs. chla and N:P
 #Histograms determine they are nonparametric

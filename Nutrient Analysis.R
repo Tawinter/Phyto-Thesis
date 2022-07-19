@@ -8,9 +8,6 @@ library(ggplot2)
 nutrients <- read.csv("CML_Nut.csv" , stringsAsFactors = TRUE)
 nutlong <- read.csv("CML_Nut_Long.csv" , stringsAsFactors = TRUE)
 
-sum(duplicated(nutlong))
-
-nutlong1 <- nutlong %>% distinct()
 
 #Changing to long data
 nutlong <- gather(nutrients, species.sum, abundance.sum, Alex.Sum., Large_PN.Sum., Small_PN.Sum.)
