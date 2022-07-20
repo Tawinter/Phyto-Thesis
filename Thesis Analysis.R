@@ -1,5 +1,7 @@
 #Thesis Analysis
 
+
+#Grapphing packages
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -10,13 +12,17 @@ library(ggpubr)
 library(formattable)
 library(scales)
 library(lubridate)
-library(nlme)
 library(lemon)
-library(DescTools)
 library(viridis)
-library(mblm)
-library(pls)
 
+#Regression of co-occurrence packages
+library(nlme)
+library(DescTools)
+library(mblm)
+
+#PLS analysis packages
+library(pls)
+library (plsVarSel)
 
 
 ############General Trend Graphs Beings Here#########################
@@ -201,7 +207,6 @@ ggplot(combch, aes(x = abundance, y = Alex))  +
   facet_rep_wrap(~ interaction(size_class, Station), scales='free_x', repeat.tick.labels = 'bottom')
 
 
-
 #Filtering out zeros to get count for co occurance table
 coocur <- combch %>% filter(Alex > 0, abundance > 0)
 
@@ -216,7 +221,6 @@ table(coocur$Station, coocur$size_class, coocur$Year)
 cor.test(coocur$abundance,coocur$Alex, method="kendall")
 
 #Running four individual Kendall tests for each graph
-#LPN at HHHR2
 lh_alex <- coocur %>% filter(Station == "HHHR2", size_class == "Large_PN")
 
 cor.test(lh_alex$abundance, lh_alex$Alex, method="kendall")
@@ -473,8 +477,8 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg
   facet_grid(rows = vars(species.avg))
 
 
-
-
+library(pls)
+library (plsVarSel)
 
 
 
@@ -493,21 +497,21 @@ nuts <- read.csv("CML_Nut_Long.csv" , stringsAsFactors = TRUE)
 
 #Alex
 alexnut <- subset(nuts, species.avg == 'Alex',
-                             select=c(phosphorus, tss, chla, nitrogen, salinity, temperature,
+                             select=c(phosphorus, chla, nitrogen, salinity, temperature,
                                       N.P, abundance.avg))
 
 alexnut <- alexnut[-c(58,59), ] #removed since NA for abundance data
 
 #Small_PN
 smallnut <- subset(nuts, species.avg == 'Small_PN',
-                  select=c(phosphorus, tss, chla, nitrogen, salinity, temperature,
+                  select=c(phosphorus, chla, nitrogen, salinity, temperature,
                            N.P, abundance.avg))
 
 smallnut <- smallnut[-c(58,59),]
 
 #Large_PN
 largenut <- subset(nuts, species.avg == 'Large_PN',
-                   select=c(phosphorus, tss, chla, nitrogen, salinity, temperature,
+                   select=c(phosphorus, chla, nitrogen, salinity, temperature,
                             N.P, abundance.avg))
 
 largenut <- largenut[-c(58,59),]
@@ -517,7 +521,6 @@ largenut <- largenut[-c(58,59),]
 alexlog <- log1p(alexnut)
 
 hist(alexlog$phosphorus) 
-hist(alexlog$tss) 
 hist(alexlog$chla) 
 hist(alexlog$nitrogen) 
 hist(alexlog$salinity) 
@@ -530,7 +533,6 @@ hist(alexlog$abundance.avg)
 smalllog <- log1p(smallnut)
 
 hist(smalllog$phosphorus) 
-hist(smalllog$tss) 
 hist(smalllog$chla) 
 hist(smalllog$nitrogen) 
 hist(smalllog$salinity) 
@@ -542,7 +544,6 @@ hist(smalllog$abundance.avg)
 largelog <- log1p(largenut)
 
 hist(largelog$phosphorus) 
-hist(largelog$tss) 
 hist(largelog$chla) 
 hist(largelog$nitrogen) 
 hist(largelog$salinity) 
@@ -551,75 +552,59 @@ hist(largelog$N.P)
 hist(largelog$abundance.avg) 
 
 
-
-#Performing the PLS for Alex
+#Performing the PLS & VIP for Alex
 set.seed(10)
 
-plsalex <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+tss+chla, 
+plsalex <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+chla, 
              na.action = na.omit, data=alexlog, scale=TRUE, validation="LOO")
 
 summary(plsalex)
 
-validationplot(plsalex)
-validationplot(plsalex, val.type="MSEP")
-validationplot(plsalex, val.type="R2")
+vipalex <- VIP(plsalex, opt.comp = 3)
 
-#Performing the PLS for Small_PN
+vipalex
+
+#Performing the PLS & VIP for Small_PN
 set.seed(10)
 
-plsSmall <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+tss+chla, 
+plsSmall <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+chla, 
                 na.action = na.omit, data=smalllog, scale=TRUE, validation="LOO")
 
 summary(plsSmall)
 
-validationplot(plsSmall)
-validationplot(plsSmall, val.type="MSEP")
-validationplot(plsSmall, val.type="R2")
+vipsmall <- VIP(plsSmall, opt.comp = 3)
 
-#Performing the PLS for Large_PN
+vipsmall
+
+#Performing the PLS & VIP for Large_PN
 set.seed(10)
 
-plslarge <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+tss+chla, 
+plslarge <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+chla, 
                  na.action = na.omit, data=largelog, scale=TRUE, validation="LOO")
 
 summary(plslarge)
 
-validationplot(plslarge)
-validationplot(plslarge, val.type="MSEP")
-validationplot(plslarge, val.type="R2")
+viplarge <- VIP(plslarge, opt.comp = 3)
+
+viplarge
 
 
-#Non-parametric test
-install.packages("plsRglm")
-library(plsRglm)
+#Follow-up regressions for abundance (of each) vs phosphorus
+  #Using (species)nut dataframes created from pls analysis above
 
-Xalex<-alexlog[,1:7]
-yalex<-alexlog[,8]
+#Taking the log1p and adding new column
+alexReg <- alexnut %>% 
+  mutate(abunAL = log1p(abundance.avg))
 
-nPlsAlex <- plsRglm(yalex, xalex, 10)
+smallReg <- smallnut %>% 
+  mutate(abunSL = log1p(abundance.avg))
 
-summary(nPlsAlex)
+largeReg <- largenut %>% 
+  mutate(abunLL = log1p(abundance.avg))
 
-#Regression on abundance vs. chla and N:P
-#Histograms determine they are nonparametric
+#Alex vs phosphorus
+cor.test(alexReg$phosphorus, alexReg$abunAL, method="kendall")
 
-#Abundance vs chla
-chla_alex <- nutlong %>% filter(species.avg == "Alex")
+cor.test(smallReg$phosphorus, smallReg$abunSL, method = "kendall")
 
-chla_alex <- chla_alex[-c(58,59), ]
-
-chla_alex <- chla_alex[ , c("chla", "species.avg", "abundance.avg")]   
-
-chla_alex <- na.omit(chla_alex)
-
-rch_alex = mblm(abundance.avg ~ chla,
-               data= chla_alex, repeated = FALSE)
-
-summary(rch_alex)
-
-
-cnp_pnl <- nutlong %>% filter(species.avg == "Large_PN")
-
-
-
-cnp_pns <- nutlong %>% filter(species.avg == "Small_PN")
+cor.test(largeReg$phosphorus, largeReg$abunLL, method = "kendall")
