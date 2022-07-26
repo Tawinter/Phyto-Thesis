@@ -480,8 +480,6 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg
 library(pls)
 library (plsVarSel)
 
-
-
 #Testing variables for normality for PLS analysis
 hist(nutlong$phosphorus) #positive skew
 hist(nutlong$tss) #no/positive skew, very little data
@@ -561,6 +559,7 @@ plsalex <- plsr(abundance.avg~temperature+salinity+nitrogen+phosphorus+N.P+chla,
 summary(plsalex)
 
 vipalex <- VIP(plsalex, opt.comp = 3)
+
 
 vipalex
 
