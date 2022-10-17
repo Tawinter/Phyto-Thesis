@@ -22,12 +22,20 @@ cols <- c("2017"="red", "2018"="blue", "2019"="purple", "2020"="green", "2021"="
 
 #Grouping (by two variables), filtering, and creating a new table with multiple columns and set parameters
 cml_month <- cml %>% 
-  group_by(Year, Month) %>% 
+  group_by(Year, Month, Station) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
 
 hampton_month <- hampton %>% 
-  group_by(Year, Month) %>% 
+  group_by(Year, Month, Station) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
+
+write.csv(hampton_month,'hampton_month.csv', row.names = FALSE)
+
+hampton_month <- gather(hampton_month, Species, Sum, Alex:Small_PN, factor_key=TRUE)
+
+totalch <- cml_month %>% full_join(hampton_month)
+
+write.csv(totalch,'totalch.csv', row.names = FALSE)
 
 #Changing following 6 graphs into a panel of 6 graphs
 totalch <- read.csv("totalch.csv", stringsAsFactors = TRUE)

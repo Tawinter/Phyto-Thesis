@@ -1,358 +1,394 @@
-"Station","Year","Month","Species","Sum","MoAb"
-"UNH Pier",2017,2,"Alex",0,"Feb"
-"UNH Pier",2017,3,"Alex",15,"Mar"
-"UNH Pier",2017,4,"Alex",30,"Apr"
-"UNH Pier",2017,5,"Alex",180,"May"
-"UNH Pier",2017,6,"Alex",120,"Jun"
-"UNH Pier",2017,7,"Alex",45,"Jul"
-"UNH Pier",2017,8,"Alex",30,"Aug"
-"UNH Pier",2017,9,"Alex",0,"Sep"
-"UNH Pier",2017,10,"Alex",0,"Oct"
-"UNH Pier",2017,11,"Alex",0,"Nov"
-"UNH Pier",2017,12,"Alex",0,"Dec"
-"UNH Pier",2018,1,"Alex",0,"Jan"
-"UNH Pier",2018,2,"Alex",0,"Feb"
-"UNH Pier",2018,3,"Alex",0,"Mar"
-"UNH Pier",2018,4,"Alex",15,"Apr"
-"UNH Pier",2018,5,"Alex",30,"May"
-"UNH Pier",2018,6,"Alex",15,"Jun"
-"UNH Pier",2018,7,"Alex",30,"Jul"
-"UNH Pier",2018,8,"Alex",0,"Aug"
-"UNH Pier",2018,9,"Alex",0,"Sep"
-"UNH Pier",2018,10,"Alex",0,"Oct"
-"UNH Pier",2018,11,"Alex",0,"Nov"
-"UNH Pier",2018,12,"Alex",0,"Dec"
-"UNH Pier",2019,1,"Alex",0,"Jan"
-"UNH Pier",2019,2,"Alex",0,"Feb"
-"UNH Pier",2019,3,"Alex",0,"Mar"
-"UNH Pier",2019,4,"Alex",0,"Apr"
-"UNH Pier",2019,5,"Alex",210,"May"
-"UNH Pier",2019,6,"Alex",750,"Jun"
-"UNH Pier",2019,7,"Alex",765,"Jul"
-"UNH Pier",2019,8,"Alex",0,"Aug"
-"UNH Pier",2019,9,"Alex",0,"Sep"
-"UNH Pier",2019,10,"Alex",0,"Oct"
-"UNH Pier",2019,11,"Alex",0,"Nov"
-"UNH Pier",2020,2,"Alex",0,"Feb"
-"UNH Pier",2020,3,"Alex",52.5,"Mar"
-"UNH Pier",2020,4,"Alex",0,"Apr"
-"UNH Pier",2020,5,"Alex",22.5,"May"
-"UNH Pier",2020,6,"Alex",15,"Jun"
-"UNH Pier",2020,7,"Alex",0,"Jul"
-"UNH Pier",2020,8,"Alex",0,"Aug"
-"UNH Pier",2020,9,"Alex",0,"Sep"
-"UNH Pier",2020,10,"Alex",0,"Oct"
-"UNH Pier",2020,11,"Alex",0,"Nov"
-"UNH Pier",2020,12,"Alex",0,"Dec"
-"UNH Pier",2021,1,"Alex",0,"Jan"
-"UNH Pier",2021,2,"Alex",0,"Feb"
-"UNH Pier",2021,3,"Alex",0,"Mar"
-"UNH Pier",2021,4,"Alex",37.5,"Apr"
-"UNH Pier",2021,5,"Alex",37.5,"May"
-"UNH Pier",2021,6,"Alex",15,"Jun"
-"UNH Pier",2021,7,"Alex",0,"Jul"
-"UNH Pier",2021,8,"Alex",7.5,"Aug"
-"UNH Pier",2021,9,"Alex",0,"Sep"
-"UNH Pier",2021,10,"Alex",0,"Oct"
-"UNH Pier",2021,11,"Alex",0,"Nov"
-"UNH Pier",2021,12,"Alex",0,"Dec"
-"UNH Pier",2022,1,"Alex",0,"Jan"
-"UNH Pier",2022,2,"Alex",0,"Feb"
-"UNH Pier",2017,2,"Large_PN",0,"Feb"
-"UNH Pier",2017,3,"Large_PN",0,"Mar"
-"UNH Pier",2017,4,"Large_PN",0,"Apr"
-"UNH Pier",2017,5,"Large_PN",0,"May"
-"UNH Pier",2017,6,"Large_PN",960,"Jun"
-"UNH Pier",2017,7,"Large_PN",60,"Jul"
-"UNH Pier",2017,8,"Large_PN",0,"Aug"
-"UNH Pier",2017,9,"Large_PN",517.5,"Sep"
-"UNH Pier",2017,10,"Large_PN",247.5,"Oct"
-"UNH Pier",2017,11,"Large_PN",847.5,"Nov"
-"UNH Pier",2017,12,"Large_PN",2685,"Dec"
-"UNH Pier",2018,1,"Large_PN",712.5,"Jan"
-"UNH Pier",2018,2,"Large_PN",195,"Feb"
-"UNH Pier",2018,3,"Large_PN",0,"Mar"
-"UNH Pier",2018,4,"Large_PN",0,"Apr"
-"UNH Pier",2018,5,"Large_PN",37.5,"May"
-"UNH Pier",2018,6,"Large_PN",75,"Jun"
-"UNH Pier",2018,7,"Large_PN",1237.5,"Jul"
-"UNH Pier",2018,8,"Large_PN",472.5,"Aug"
-"UNH Pier",2018,9,"Large_PN",210,"Sep"
-"UNH Pier",2018,10,"Large_PN",735,"Oct"
-"UNH Pier",2018,11,"Large_PN",210,"Nov"
-"UNH Pier",2018,12,"Large_PN",60,"Dec"
-"UNH Pier",2019,1,"Large_PN",0,"Jan"
-"UNH Pier",2019,2,"Large_PN",0,"Feb"
-"UNH Pier",2019,3,"Large_PN",0,"Mar"
-"UNH Pier",2019,4,"Large_PN",0,"Apr"
-"UNH Pier",2019,5,"Large_PN",0,"May"
-"UNH Pier",2019,6,"Large_PN",120,"Jun"
-"UNH Pier",2019,7,"Large_PN",2227.5,"Jul"
-"UNH Pier",2019,8,"Large_PN",5685,"Aug"
-"UNH Pier",2019,9,"Large_PN",780,"Sep"
-"UNH Pier",2019,10,"Large_PN",210,"Oct"
-"UNH Pier",2019,11,"Large_PN",0,"Nov"
-"UNH Pier",2020,2,"Large_PN",0,"Feb"
-"UNH Pier",2020,3,"Large_PN",105,"Mar"
-"UNH Pier",2020,4,"Large_PN",0,"Apr"
-"UNH Pier",2020,5,"Large_PN",1980,"May"
-"UNH Pier",2020,6,"Large_PN",6832.5,"Jun"
-"UNH Pier",2020,7,"Large_PN",1327.5,"Jul"
-"UNH Pier",2020,8,"Large_PN",960,"Aug"
-"UNH Pier",2020,9,"Large_PN",13822.5,"Sep"
-"UNH Pier",2020,10,"Large_PN",20850,"Oct"
-"UNH Pier",2020,11,"Large_PN",13312.5,"Nov"
-"UNH Pier",2020,12,"Large_PN",922.5,"Dec"
-"UNH Pier",2021,1,"Large_PN",135,"Jan"
-"UNH Pier",2021,2,"Large_PN",0,"Feb"
-"UNH Pier",2021,3,"Large_PN",105,"Mar"
-"UNH Pier",2021,4,"Large_PN",0,"Apr"
-"UNH Pier",2021,5,"Large_PN",0,"May"
-"UNH Pier",2021,6,"Large_PN",6442.5,"Jun"
-"UNH Pier",2021,7,"Large_PN",690,"Jul"
-"UNH Pier",2021,8,"Large_PN",127.5,"Aug"
-"UNH Pier",2021,9,"Large_PN",97.5,"Sep"
-"UNH Pier",2021,10,"Large_PN",0,"Oct"
-"UNH Pier",2021,11,"Large_PN",60,"Nov"
-"UNH Pier",2021,12,"Large_PN",457.5,"Dec"
-"UNH Pier",2022,1,"Large_PN",210,"Jan"
-"UNH Pier",2022,2,"Large_PN",0,"Feb"
-"UNH Pier",2017,2,"Small_PN",0,"Feb"
-"UNH Pier",2017,3,"Small_PN",60,"Mar"
-"UNH Pier",2017,4,"Small_PN",0,"Apr"
-"UNH Pier",2017,5,"Small_PN",0,"May"
-"UNH Pier",2017,6,"Small_PN",397.5,"Jun"
-"UNH Pier",2017,7,"Small_PN",120,"Jul"
-"UNH Pier",2017,8,"Small_PN",0,"Aug"
-"UNH Pier",2017,9,"Small_PN",1732.5,"Sep"
-"UNH Pier",2017,10,"Small_PN",1057.5,"Oct"
-"UNH Pier",2017,11,"Small_PN",645,"Nov"
-"UNH Pier",2017,12,"Small_PN",1897.5,"Dec"
-"UNH Pier",2018,1,"Small_PN",142.5,"Jan"
-"UNH Pier",2018,2,"Small_PN",150,"Feb"
-"UNH Pier",2018,3,"Small_PN",52.5,"Mar"
-"UNH Pier",2018,4,"Small_PN",7.5,"Apr"
-"UNH Pier",2018,5,"Small_PN",1762.5,"May"
-"UNH Pier",2018,6,"Small_PN",2010,"Jun"
-"UNH Pier",2018,7,"Small_PN",1275,"Jul"
-"UNH Pier",2018,8,"Small_PN",172.5,"Aug"
-"UNH Pier",2018,9,"Small_PN",60,"Sep"
-"UNH Pier",2018,10,"Small_PN",390,"Oct"
-"UNH Pier",2018,11,"Small_PN",427.5,"Nov"
-"UNH Pier",2018,12,"Small_PN",15,"Dec"
-"UNH Pier",2019,1,"Small_PN",0,"Jan"
-"UNH Pier",2019,2,"Small_PN",0,"Feb"
-"UNH Pier",2019,3,"Small_PN",0,"Mar"
-"UNH Pier",2019,4,"Small_PN",30,"Apr"
-"UNH Pier",2019,5,"Small_PN",0,"May"
-"UNH Pier",2019,6,"Small_PN",67.5,"Jun"
-"UNH Pier",2019,7,"Small_PN",3637.5,"Jul"
-"UNH Pier",2019,8,"Small_PN",210,"Aug"
-"UNH Pier",2019,9,"Small_PN",3180,"Sep"
-"UNH Pier",2019,10,"Small_PN",712.5,"Oct"
-"UNH Pier",2019,11,"Small_PN",0,"Nov"
-"UNH Pier",2020,2,"Small_PN",105,"Feb"
-"UNH Pier",2020,3,"Small_PN",435,"Mar"
-"UNH Pier",2020,4,"Small_PN",90,"Apr"
-"UNH Pier",2020,5,"Small_PN",3450,"May"
-"UNH Pier",2020,6,"Small_PN",405740,"Jun"
-"UNH Pier",2020,7,"Small_PN",3967.5,"Jul"
-"UNH Pier",2020,8,"Small_PN",735,"Aug"
-"UNH Pier",2020,9,"Small_PN",44250,"Sep"
-"UNH Pier",2020,10,"Small_PN",682.5,"Oct"
-"UNH Pier",2020,11,"Small_PN",720,"Nov"
-"UNH Pier",2020,12,"Small_PN",157.5,"Dec"
-"UNH Pier",2021,1,"Small_PN",232.5,"Jan"
-"UNH Pier",2021,2,"Small_PN",0,"Feb"
-"UNH Pier",2021,3,"Small_PN",0,"Mar"
-"UNH Pier",2021,4,"Small_PN",0,"Apr"
-"UNH Pier",2021,5,"Small_PN",0,"May"
-"UNH Pier",2021,6,"Small_PN",2265,"Jun"
-"UNH Pier",2021,7,"Small_PN",165,"Jul"
-"UNH Pier",2021,8,"Small_PN",112.5,"Aug"
-"UNH Pier",2021,9,"Small_PN",37.5,"Sep"
-"UNH Pier",2021,10,"Small_PN",0,"Oct"
-"UNH Pier",2021,11,"Small_PN",37.5,"Nov"
-"UNH Pier",2021,12,"Small_PN",0,"Dec"
-"UNH Pier",2022,1,"Small_PN",0,"Jan"
-"UNH Pier",2022,2,"Small_PN",1635,"Feb"
-"HHHR2",2017,2,"Alex",0,"Feb"
-"HHHR2",2017,3,"Alex",0,"Mar"
-"HHHR2",2017,4,"Alex",22.5,"Apr"
-"HHHR2",2017,5,"Alex",82.5,"May"
-"HHHR2",2017,6,"Alex",105,"Jun"
-"HHHR2",2017,7,"Alex",67.5,"Jul"
-"HHHR2",2017,8,"Alex",0,"Aug"
-"HHHR2",2017,9,"Alex",0,"Sep"
-"HHHR2",2017,10,"Alex",0,"Oct"
-"HHHR2",2017,11,"Alex",0,"Nov"
-"HHHR2",2017,12,"Alex",0,"Dec"
-"HHHR2",2018,1,"Alex",0,"Jan"
-"HHHR2",2018,2,"Alex",0,"Feb"
-"HHHR2",2018,3,"Alex",0,"Mar"
-"HHHR2",2018,4,"Alex",15,"Apr"
-"HHHR2",2018,5,"Alex",7.5,"May"
-"HHHR2",2018,6,"Alex",67.5,"Jun"
-"HHHR2",2018,7,"Alex",15,"Jul"
-"HHHR2",2018,8,"Alex",0,"Aug"
-"HHHR2",2018,9,"Alex",0,"Sep"
-"HHHR2",2018,10,"Alex",0,"Oct"
-"HHHR2",2018,11,"Alex",0,"Nov"
-"HHHR2",2018,12,"Alex",0,"Dec"
-"HHHR2",2019,1,"Alex",0,"Jan"
-"HHHR2",2019,2,"Alex",0,"Feb"
-"HHHR2",2019,3,"Alex",0,"Mar"
-"HHHR2",2019,4,"Alex",0,"Apr"
-"HHHR2",2019,5,"Alex",487.5,"May"
-"HHHR2",2019,6,"Alex",1275,"Jun"
-"HHHR2",2019,7,"Alex",3007.5,"Jul"
-"HHHR2",2019,8,"Alex",15,"Aug"
-"HHHR2",2019,9,"Alex",0,"Sep"
-"HHHR2",2019,10,"Alex",0,"Oct"
-"HHHR2",2019,11,"Alex",0,"Nov"
-"HHHR2",2019,12,"Alex",0,"Dec"
-"HHHR2",2020,2,"Alex",0,"Feb"
-"HHHR2",2020,3,"Alex",0,"Mar"
-"HHHR2",2020,4,"Alex",0,"Apr"
-"HHHR2",2020,5,"Alex",30,"May"
-"HHHR2",2020,6,"Alex",0,"Jun"
-"HHHR2",2020,7,"Alex",0,"Jul"
-"HHHR2",2020,8,"Alex",0,"Aug"
-"HHHR2",2020,9,"Alex",0,"Sep"
-"HHHR2",2020,10,"Alex",0,"Oct"
-"HHHR2",2020,11,"Alex",0,"Nov"
-"HHHR2",2020,12,"Alex",0,"Dec"
-"HHHR2",2021,1,"Alex",0,"Jan"
-"HHHR2",2021,2,"Alex",0,"Feb"
-"HHHR2",2021,3,"Alex",0,"Mar"
-"HHHR2",2021,4,"Alex",52.5,"Apr"
-"HHHR2",2021,5,"Alex",0,"May"
-"HHHR2",2021,6,"Alex",0,"Jun"
-"HHHR2",2021,7,"Alex",0,"Jul"
-"HHHR2",2021,8,"Alex",0,"Aug"
-"HHHR2",2021,9,"Alex",0,"Sep"
-"HHHR2",2021,10,"Alex",0,"Oct"
-"HHHR2",2021,11,"Alex",0,"Nov"
-"HHHR2",2021,12,"Alex",0,"Dec"
-"HHHR2",2022,1,"Alex",7.5,"Jan"
-"HHHR2",2022,2,"Alex",0,"Feb"
-"HHHR2",2017,2,"Large_PN",0,"Feb"
-"HHHR2",2017,3,"Large_PN",0,"Mar"
-"HHHR2",2017,4,"Large_PN",0,"Apr"
-"HHHR2",2017,5,"Large_PN",0,"May"
-"HHHR2",2017,6,"Large_PN",5002.5,"Jun"
-"HHHR2",2017,7,"Large_PN",315,"Jul"
-"HHHR2",2017,8,"Large_PN",240,"Aug"
-"HHHR2",2017,9,"Large_PN",232.5,"Sep"
-"HHHR2",2017,10,"Large_PN",3075,"Oct"
-"HHHR2",2017,11,"Large_PN",2085,"Nov"
-"HHHR2",2017,12,"Large_PN",6120,"Dec"
-"HHHR2",2018,1,"Large_PN",1935,"Jan"
-"HHHR2",2018,2,"Large_PN",975,"Feb"
-"HHHR2",2018,3,"Large_PN",142.5,"Mar"
-"HHHR2",2018,4,"Large_PN",22.5,"Apr"
-"HHHR2",2018,5,"Large_PN",75,"May"
-"HHHR2",2018,6,"Large_PN",1117.5,"Jun"
-"HHHR2",2018,7,"Large_PN",247.5,"Jul"
-"HHHR2",2018,8,"Large_PN",3832.5,"Aug"
-"HHHR2",2018,9,"Large_PN",112.5,"Sep"
-"HHHR2",2018,10,"Large_PN",1080,"Oct"
-"HHHR2",2018,11,"Large_PN",382.5,"Nov"
-"HHHR2",2018,12,"Large_PN",555,"Dec"
-"HHHR2",2019,1,"Large_PN",0,"Jan"
-"HHHR2",2019,2,"Large_PN",0,"Feb"
-"HHHR2",2019,3,"Large_PN",22.5,"Mar"
-"HHHR2",2019,4,"Large_PN",0,"Apr"
-"HHHR2",2019,5,"Large_PN",217.5,"May"
-"HHHR2",2019,6,"Large_PN",2287.5,"Jun"
-"HHHR2",2019,7,"Large_PN",1875,"Jul"
-"HHHR2",2019,8,"Large_PN",5167.5,"Aug"
-"HHHR2",2019,9,"Large_PN",2280,"Sep"
-"HHHR2",2019,10,"Large_PN",682.5,"Oct"
-"HHHR2",2019,11,"Large_PN",60,"Nov"
-"HHHR2",2019,12,"Large_PN",0,"Dec"
-"HHHR2",2020,2,"Large_PN",390,"Feb"
-"HHHR2",2020,3,"Large_PN",405,"Mar"
-"HHHR2",2020,4,"Large_PN",0,"Apr"
-"HHHR2",2020,5,"Large_PN",4605,"May"
-"HHHR2",2020,6,"Large_PN",2145,"Jun"
-"HHHR2",2020,7,"Large_PN",1455,"Jul"
-"HHHR2",2020,8,"Large_PN",2557.5,"Aug"
-"HHHR2",2020,9,"Large_PN",9450,"Sep"
-"HHHR2",2020,10,"Large_PN",39900,"Oct"
-"HHHR2",2020,11,"Large_PN",59325,"Nov"
-"HHHR2",2020,12,"Large_PN",3892.5,"Dec"
-"HHHR2",2021,1,"Large_PN",772.5,"Jan"
-"HHHR2",2021,2,"Large_PN",45,"Feb"
-"HHHR2",2021,3,"Large_PN",225,"Mar"
-"HHHR2",2021,4,"Large_PN",0,"Apr"
-"HHHR2",2021,5,"Large_PN",0,"May"
-"HHHR2",2021,6,"Large_PN",0,"Jun"
-"HHHR2",2021,7,"Large_PN",0,"Jul"
-"HHHR2",2021,8,"Large_PN",0,"Aug"
-"HHHR2",2021,9,"Large_PN",0,"Sep"
-"HHHR2",2021,10,"Large_PN",0,"Oct"
-"HHHR2",2021,11,"Large_PN",247.5,"Nov"
-"HHHR2",2021,12,"Large_PN",645,"Dec"
-"HHHR2",2022,1,"Large_PN",1252.5,"Jan"
-"HHHR2",2022,2,"Large_PN",30,"Feb"
-"HHHR2",2017,2,"Small_PN",90,"Feb"
-"HHHR2",2017,3,"Small_PN",352.5,"Mar"
-"HHHR2",2017,4,"Small_PN",30,"Apr"
-"HHHR2",2017,5,"Small_PN",0,"May"
-"HHHR2",2017,6,"Small_PN",1282.5,"Jun"
-"HHHR2",2017,7,"Small_PN",1717.5,"Jul"
-"HHHR2",2017,8,"Small_PN",3765,"Aug"
-"HHHR2",2017,9,"Small_PN",2317.5,"Sep"
-"HHHR2",2017,10,"Small_PN",360,"Oct"
-"HHHR2",2017,11,"Small_PN",2835,"Nov"
-"HHHR2",2017,12,"Small_PN",2707.5,"Dec"
-"HHHR2",2018,1,"Small_PN",375,"Jan"
-"HHHR2",2018,2,"Small_PN",1807.5,"Feb"
-"HHHR2",2018,3,"Small_PN",75,"Mar"
-"HHHR2",2018,4,"Small_PN",157.5,"Apr"
-"HHHR2",2018,5,"Small_PN",20850,"May"
-"HHHR2",2018,6,"Small_PN",12510,"Jun"
-"HHHR2",2018,7,"Small_PN",1800,"Jul"
-"HHHR2",2018,8,"Small_PN",3435,"Aug"
-"HHHR2",2018,9,"Small_PN",60,"Sep"
-"HHHR2",2018,10,"Small_PN",1710,"Oct"
-"HHHR2",2018,11,"Small_PN",165,"Nov"
-"HHHR2",2018,12,"Small_PN",0,"Dec"
-"HHHR2",2019,1,"Small_PN",0,"Jan"
-"HHHR2",2019,2,"Small_PN",0,"Feb"
-"HHHR2",2019,3,"Small_PN",0,"Mar"
-"HHHR2",2019,4,"Small_PN",0,"Apr"
-"HHHR2",2019,5,"Small_PN",52.5,"May"
-"HHHR2",2019,6,"Small_PN",135,"Jun"
-"HHHR2",2019,7,"Small_PN",1890,"Jul"
-"HHHR2",2019,8,"Small_PN",4245,"Aug"
-"HHHR2",2019,9,"Small_PN",1282.5,"Sep"
-"HHHR2",2019,10,"Small_PN",2062.5,"Oct"
-"HHHR2",2019,11,"Small_PN",307.5,"Nov"
-"HHHR2",2019,12,"Small_PN",0,"Dec"
-"HHHR2",2020,2,"Small_PN",5295,"Feb"
-"HHHR2",2020,3,"Small_PN",8347.5,"Mar"
-"HHHR2",2020,4,"Small_PN",90,"Apr"
-"HHHR2",2020,5,"Small_PN",1159442.5,"May"
-"HHHR2",2020,6,"Small_PN",1100320,"Jun"
-"HHHR2",2020,7,"Small_PN",25800,"Jul"
-"HHHR2",2020,8,"Small_PN",5782.5,"Aug"
-"HHHR2",2020,9,"Small_PN",24442.5,"Sep"
-"HHHR2",2020,10,"Small_PN",1350,"Oct"
-"HHHR2",2020,11,"Small_PN",2475,"Nov"
-"HHHR2",2020,12,"Small_PN",3555,"Dec"
-"HHHR2",2021,1,"Small_PN",1402.5,"Jan"
-"HHHR2",2021,2,"Small_PN",0,"Feb"
-"HHHR2",2021,3,"Small_PN",60,"Mar"
-"HHHR2",2021,4,"Small_PN",0,"Apr"
-"HHHR2",2021,5,"Small_PN",0,"May"
-"HHHR2",2021,6,"Small_PN",0,"Jun"
-"HHHR2",2021,7,"Small_PN",0,"Jul"
-"HHHR2",2021,8,"Small_PN",0,"Aug"
-"HHHR2",2021,9,"Small_PN",37.5,"Sep"
-"HHHR2",2021,10,"Small_PN",0,"Oct"
-"HHHR2",2021,11,"Small_PN",0,"Nov"
-"HHHR2",2021,12,"Small_PN",0,"Dec"
-"HHHR2",2022,1,"Small_PN",0,"Jan"
-"HHHR2",2022,2,"Small_PN",232.5,"Feb"
+"Year","Month","Station","Species","Sum"
+2017,2,"UNH Pier","Alex",0
+2017,3,"UNH Pier","Alex",15
+2017,4,"UNH Pier","Alex",30
+2017,5,"UNH Pier","Alex",180
+2017,6,"UNH Pier","Alex",120
+2017,7,"UNH Pier","Alex",45
+2017,8,"UNH Pier","Alex",30
+2017,9,"UNH Pier","Alex",0
+2017,10,"UNH Pier","Alex",0
+2017,11,"UNH Pier","Alex",0
+2017,12,"UNH Pier","Alex",0
+2018,1,"UNH Pier","Alex",0
+2018,2,"UNH Pier","Alex",0
+2018,3,"UNH Pier","Alex",0
+2018,4,"UNH Pier","Alex",15
+2018,5,"UNH Pier","Alex",30
+2018,6,"UNH Pier","Alex",15
+2018,7,"UNH Pier","Alex",30
+2018,8,"UNH Pier","Alex",0
+2018,9,"UNH Pier","Alex",0
+2018,10,"UNH Pier","Alex",0
+2018,11,"UNH Pier","Alex",0
+2018,12,"UNH Pier","Alex",0
+2019,1,"UNH Pier","Alex",0
+2019,2,"UNH Pier","Alex",0
+2019,3,"UNH Pier","Alex",0
+2019,4,"UNH Pier","Alex",0
+2019,5,"UNH Pier","Alex",210
+2019,6,"UNH Pier","Alex",750
+2019,7,"UNH Pier","Alex",765
+2019,8,"UNH Pier","Alex",0
+2019,9,"UNH Pier","Alex",0
+2019,10,"UNH Pier","Alex",0
+2019,11,"UNH Pier","Alex",0
+2020,2,"UNH Pier","Alex",0
+2020,3,"UNH Pier","Alex",52.5
+2020,4,"UNH Pier","Alex",0
+2020,5,"UNH Pier","Alex",22.5
+2020,6,"UNH Pier","Alex",15
+2020,7,"UNH Pier","Alex",0
+2020,8,"UNH Pier","Alex",0
+2020,9,"UNH Pier","Alex",0
+2020,10,"UNH Pier","Alex",0
+2020,11,"UNH Pier","Alex",0
+2020,12,"UNH Pier","Alex",0
+2021,1,"UNH Pier","Alex",0
+2021,2,"UNH Pier","Alex",0
+2021,3,"UNH Pier","Alex",0
+2021,4,"UNH Pier","Alex",37.5
+2021,5,"UNH Pier","Alex",37.5
+2021,6,"UNH Pier","Alex",15
+2021,7,"UNH Pier","Alex",0
+2021,8,"UNH Pier","Alex",7.5
+2021,9,"UNH Pier","Alex",0
+2021,10,"UNH Pier","Alex",0
+2021,11,"UNH Pier","Alex",0
+2021,12,"UNH Pier","Alex",0
+2022,1,"UNH Pier","Alex",0
+2022,2,"UNH Pier","Alex",0
+2022,3,"UNH Pier","Alex",7.5
+2022,4,"UNH Pier","Alex",7.5
+2022,5,"UNH Pier","Alex",247.5
+2022,6,"UNH Pier","Alex",3217.5
+2022,7,"UNH Pier","Alex",540
+2022,8,"UNH Pier","Alex",0
+2017,2,"UNH Pier","Large_PN",0
+2017,3,"UNH Pier","Large_PN",0
+2017,4,"UNH Pier","Large_PN",0
+2017,5,"UNH Pier","Large_PN",0
+2017,6,"UNH Pier","Large_PN",960
+2017,7,"UNH Pier","Large_PN",60
+2017,8,"UNH Pier","Large_PN",0
+2017,9,"UNH Pier","Large_PN",517.5
+2017,10,"UNH Pier","Large_PN",247.5
+2017,11,"UNH Pier","Large_PN",847.5
+2017,12,"UNH Pier","Large_PN",2685
+2018,1,"UNH Pier","Large_PN",712.5
+2018,2,"UNH Pier","Large_PN",195
+2018,3,"UNH Pier","Large_PN",0
+2018,4,"UNH Pier","Large_PN",0
+2018,5,"UNH Pier","Large_PN",37.5
+2018,6,"UNH Pier","Large_PN",75
+2018,7,"UNH Pier","Large_PN",1237.5
+2018,8,"UNH Pier","Large_PN",472.5
+2018,9,"UNH Pier","Large_PN",210
+2018,10,"UNH Pier","Large_PN",735
+2018,11,"UNH Pier","Large_PN",210
+2018,12,"UNH Pier","Large_PN",60
+2019,1,"UNH Pier","Large_PN",0
+2019,2,"UNH Pier","Large_PN",0
+2019,3,"UNH Pier","Large_PN",0
+2019,4,"UNH Pier","Large_PN",0
+2019,5,"UNH Pier","Large_PN",0
+2019,6,"UNH Pier","Large_PN",120
+2019,7,"UNH Pier","Large_PN",2227.5
+2019,8,"UNH Pier","Large_PN",5685
+2019,9,"UNH Pier","Large_PN",780
+2019,10,"UNH Pier","Large_PN",210
+2019,11,"UNH Pier","Large_PN",0
+2020,2,"UNH Pier","Large_PN",0
+2020,3,"UNH Pier","Large_PN",105
+2020,4,"UNH Pier","Large_PN",0
+2020,5,"UNH Pier","Large_PN",1980
+2020,6,"UNH Pier","Large_PN",6832.5
+2020,7,"UNH Pier","Large_PN",1327.5
+2020,8,"UNH Pier","Large_PN",960
+2020,9,"UNH Pier","Large_PN",13822.5
+2020,10,"UNH Pier","Large_PN",20850
+2020,11,"UNH Pier","Large_PN",13312.5
+2020,12,"UNH Pier","Large_PN",922.5
+2021,1,"UNH Pier","Large_PN",135
+2021,2,"UNH Pier","Large_PN",0
+2021,3,"UNH Pier","Large_PN",105
+2021,4,"UNH Pier","Large_PN",0
+2021,5,"UNH Pier","Large_PN",0
+2021,6,"UNH Pier","Large_PN",6442.5
+2021,7,"UNH Pier","Large_PN",690
+2021,8,"UNH Pier","Large_PN",127.5
+2021,9,"UNH Pier","Large_PN",97.5
+2021,10,"UNH Pier","Large_PN",0
+2021,11,"UNH Pier","Large_PN",60
+2021,12,"UNH Pier","Large_PN",457.5
+2022,1,"UNH Pier","Large_PN",210
+2022,2,"UNH Pier","Large_PN",7.5
+2022,3,"UNH Pier","Large_PN",1777.5
+2022,4,"UNH Pier","Large_PN",330
+2022,5,"UNH Pier","Large_PN",0
+2022,6,"UNH Pier","Large_PN",15
+2022,7,"UNH Pier","Large_PN",37.5
+2022,8,"UNH Pier","Large_PN",0
+2017,2,"UNH Pier","Small_PN",0
+2017,3,"UNH Pier","Small_PN",60
+2017,4,"UNH Pier","Small_PN",0
+2017,5,"UNH Pier","Small_PN",0
+2017,6,"UNH Pier","Small_PN",397.5
+2017,7,"UNH Pier","Small_PN",120
+2017,8,"UNH Pier","Small_PN",0
+2017,9,"UNH Pier","Small_PN",1732.5
+2017,10,"UNH Pier","Small_PN",1057.5
+2017,11,"UNH Pier","Small_PN",645
+2017,12,"UNH Pier","Small_PN",1897.5
+2018,1,"UNH Pier","Small_PN",142.5
+2018,2,"UNH Pier","Small_PN",150
+2018,3,"UNH Pier","Small_PN",52.5
+2018,4,"UNH Pier","Small_PN",7.5
+2018,5,"UNH Pier","Small_PN",1762.5
+2018,6,"UNH Pier","Small_PN",2010
+2018,7,"UNH Pier","Small_PN",1275
+2018,8,"UNH Pier","Small_PN",172.5
+2018,9,"UNH Pier","Small_PN",60
+2018,10,"UNH Pier","Small_PN",390
+2018,11,"UNH Pier","Small_PN",427.5
+2018,12,"UNH Pier","Small_PN",15
+2019,1,"UNH Pier","Small_PN",0
+2019,2,"UNH Pier","Small_PN",0
+2019,3,"UNH Pier","Small_PN",0
+2019,4,"UNH Pier","Small_PN",30
+2019,5,"UNH Pier","Small_PN",0
+2019,6,"UNH Pier","Small_PN",67.5
+2019,7,"UNH Pier","Small_PN",3637.5
+2019,8,"UNH Pier","Small_PN",210
+2019,9,"UNH Pier","Small_PN",3180
+2019,10,"UNH Pier","Small_PN",712.5
+2019,11,"UNH Pier","Small_PN",0
+2020,2,"UNH Pier","Small_PN",105
+2020,3,"UNH Pier","Small_PN",435
+2020,4,"UNH Pier","Small_PN",90
+2020,5,"UNH Pier","Small_PN",3450
+2020,6,"UNH Pier","Small_PN",405740
+2020,7,"UNH Pier","Small_PN",3967.5
+2020,8,"UNH Pier","Small_PN",735
+2020,9,"UNH Pier","Small_PN",44250
+2020,10,"UNH Pier","Small_PN",682.5
+2020,11,"UNH Pier","Small_PN",720
+2020,12,"UNH Pier","Small_PN",157.5
+2021,1,"UNH Pier","Small_PN",232.5
+2021,2,"UNH Pier","Small_PN",0
+2021,3,"UNH Pier","Small_PN",0
+2021,4,"UNH Pier","Small_PN",0
+2021,5,"UNH Pier","Small_PN",0
+2021,6,"UNH Pier","Small_PN",2265
+2021,7,"UNH Pier","Small_PN",165
+2021,8,"UNH Pier","Small_PN",112.5
+2021,9,"UNH Pier","Small_PN",37.5
+2021,10,"UNH Pier","Small_PN",0
+2021,11,"UNH Pier","Small_PN",37.5
+2021,12,"UNH Pier","Small_PN",0
+2022,1,"UNH Pier","Small_PN",0
+2022,2,"UNH Pier","Small_PN",2955
+2022,3,"UNH Pier","Small_PN",6150
+2022,4,"UNH Pier","Small_PN",7.5
+2022,5,"UNH Pier","Small_PN",22.5
+2022,6,"UNH Pier","Small_PN",10035
+2022,7,"UNH Pier","Small_PN",82.5
+2022,8,"UNH Pier","Small_PN",0
+2017,2,"HHHR2","Alex",0
+2017,3,"HHHR2","Alex",0
+2017,4,"HHHR2","Alex",22.5
+2017,5,"HHHR2","Alex",82.5
+2017,6,"HHHR2","Alex",105
+2017,7,"HHHR2","Alex",67.5
+2017,8,"HHHR2","Alex",0
+2017,9,"HHHR2","Alex",0
+2017,10,"HHHR2","Alex",0
+2017,11,"HHHR2","Alex",0
+2017,12,"HHHR2","Alex",0
+2018,1,"HHHR2","Alex",0
+2018,2,"HHHR2","Alex",0
+2018,3,"HHHR2","Alex",0
+2018,4,"HHHR2","Alex",15
+2018,5,"HHHR2","Alex",7.5
+2018,6,"HHHR2","Alex",67.5
+2018,7,"HHHR2","Alex",15
+2018,8,"HHHR2","Alex",0
+2018,9,"HHHR2","Alex",0
+2018,10,"HHHR2","Alex",0
+2018,11,"HHHR2","Alex",0
+2018,12,"HHHR2","Alex",0
+2019,1,"HHHR2","Alex",0
+2019,2,"HHHR2","Alex",0
+2019,3,"HHHR2","Alex",0
+2019,4,"HHHR2","Alex",0
+2019,5,"HHHR2","Alex",487.5
+2019,6,"HHHR2","Alex",1275
+2019,7,"HHHR2","Alex",3007.5
+2019,8,"HHHR2","Alex",15
+2019,9,"HHHR2","Alex",0
+2019,10,"HHHR2","Alex",0
+2019,11,"HHHR2","Alex",0
+2019,12,"HHHR2","Alex",0
+2020,2,"HHHR2","Alex",0
+2020,3,"HHHR2","Alex",0
+2020,4,"HHHR2","Alex",0
+2020,5,"HHHR2","Alex",30
+2020,6,"HHHR2","Alex",0
+2020,7,"HHHR2","Alex",0
+2020,8,"HHHR2","Alex",0
+2020,9,"HHHR2","Alex",0
+2020,10,"HHHR2","Alex",0
+2020,11,"HHHR2","Alex",0
+2020,12,"HHHR2","Alex",0
+2021,1,"HHHR2","Alex",0
+2021,2,"HHHR2","Alex",0
+2021,3,"HHHR2","Alex",0
+2021,4,"HHHR2","Alex",52.5
+2021,5,"HHHR2","Alex",0
+2021,6,"HHHR2","Alex",0
+2021,7,"HHHR2","Alex",0
+2021,8,"HHHR2","Alex",0
+2021,9,"HHHR2","Alex",0
+2021,10,"HHHR2","Alex",0
+2021,11,"HHHR2","Alex",0
+2021,12,"HHHR2","Alex",0
+2022,1,"HHHR2","Alex",7.5
+2022,2,"HHHR2","Alex",0
+2022,3,"HHHR2","Alex",30
+2022,4,"HHHR2","Alex",7.5
+2022,5,"HHHR2","Alex",187.5
+2022,6,"HHHR2","Alex",6615
+2022,7,"HHHR2","Alex",1260
+2022,8,"HHHR2","Alex",15
+2017,2,"HHHR2","Large_PN",0
+2017,3,"HHHR2","Large_PN",0
+2017,4,"HHHR2","Large_PN",0
+2017,5,"HHHR2","Large_PN",0
+2017,6,"HHHR2","Large_PN",5002.5
+2017,7,"HHHR2","Large_PN",315
+2017,8,"HHHR2","Large_PN",240
+2017,9,"HHHR2","Large_PN",232.5
+2017,10,"HHHR2","Large_PN",3075
+2017,11,"HHHR2","Large_PN",2085
+2017,12,"HHHR2","Large_PN",6120
+2018,1,"HHHR2","Large_PN",1935
+2018,2,"HHHR2","Large_PN",975
+2018,3,"HHHR2","Large_PN",142.5
+2018,4,"HHHR2","Large_PN",22.5
+2018,5,"HHHR2","Large_PN",75
+2018,6,"HHHR2","Large_PN",1117.5
+2018,7,"HHHR2","Large_PN",247.5
+2018,8,"HHHR2","Large_PN",3832.5
+2018,9,"HHHR2","Large_PN",112.5
+2018,10,"HHHR2","Large_PN",1080
+2018,11,"HHHR2","Large_PN",382.5
+2018,12,"HHHR2","Large_PN",555
+2019,1,"HHHR2","Large_PN",0
+2019,2,"HHHR2","Large_PN",0
+2019,3,"HHHR2","Large_PN",22.5
+2019,4,"HHHR2","Large_PN",0
+2019,5,"HHHR2","Large_PN",217.5
+2019,6,"HHHR2","Large_PN",2287.5
+2019,7,"HHHR2","Large_PN",1875
+2019,8,"HHHR2","Large_PN",5167.5
+2019,9,"HHHR2","Large_PN",2280
+2019,10,"HHHR2","Large_PN",682.5
+2019,11,"HHHR2","Large_PN",60
+2019,12,"HHHR2","Large_PN",0
+2020,2,"HHHR2","Large_PN",390
+2020,3,"HHHR2","Large_PN",405
+2020,4,"HHHR2","Large_PN",0
+2020,5,"HHHR2","Large_PN",4605
+2020,6,"HHHR2","Large_PN",2145
+2020,7,"HHHR2","Large_PN",1455
+2020,8,"HHHR2","Large_PN",2557.5
+2020,9,"HHHR2","Large_PN",9450
+2020,10,"HHHR2","Large_PN",39900
+2020,11,"HHHR2","Large_PN",59325
+2020,12,"HHHR2","Large_PN",3892.5
+2021,1,"HHHR2","Large_PN",772.5
+2021,2,"HHHR2","Large_PN",45
+2021,3,"HHHR2","Large_PN",225
+2021,4,"HHHR2","Large_PN",0
+2021,5,"HHHR2","Large_PN",0
+2021,6,"HHHR2","Large_PN",0
+2021,7,"HHHR2","Large_PN",0
+2021,8,"HHHR2","Large_PN",0
+2021,9,"HHHR2","Large_PN",0
+2021,10,"HHHR2","Large_PN",0
+2021,11,"HHHR2","Large_PN",247.5
+2021,12,"HHHR2","Large_PN",645
+2022,1,"HHHR2","Large_PN",1252.5
+2022,2,"HHHR2","Large_PN",30
+2022,3,"HHHR2","Large_PN",427.5
+2022,4,"HHHR2","Large_PN",390
+2022,5,"HHHR2","Large_PN",127.5
+2022,6,"HHHR2","Large_PN",82.5
+2022,7,"HHHR2","Large_PN",187.5
+2022,8,"HHHR2","Large_PN",0
+2017,2,"HHHR2","Small_PN",90
+2017,3,"HHHR2","Small_PN",352.5
+2017,4,"HHHR2","Small_PN",30
+2017,5,"HHHR2","Small_PN",0
+2017,6,"HHHR2","Small_PN",1282.5
+2017,7,"HHHR2","Small_PN",1717.5
+2017,8,"HHHR2","Small_PN",3765
+2017,9,"HHHR2","Small_PN",2317.5
+2017,10,"HHHR2","Small_PN",360
+2017,11,"HHHR2","Small_PN",2835
+2017,12,"HHHR2","Small_PN",2707.5
+2018,1,"HHHR2","Small_PN",375
+2018,2,"HHHR2","Small_PN",1807.5
+2018,3,"HHHR2","Small_PN",75
+2018,4,"HHHR2","Small_PN",157.5
+2018,5,"HHHR2","Small_PN",20850
+2018,6,"HHHR2","Small_PN",12510
+2018,7,"HHHR2","Small_PN",1800
+2018,8,"HHHR2","Small_PN",3435
+2018,9,"HHHR2","Small_PN",60
+2018,10,"HHHR2","Small_PN",1710
+2018,11,"HHHR2","Small_PN",165
+2018,12,"HHHR2","Small_PN",0
+2019,1,"HHHR2","Small_PN",0
+2019,2,"HHHR2","Small_PN",0
+2019,3,"HHHR2","Small_PN",0
+2019,4,"HHHR2","Small_PN",0
+2019,5,"HHHR2","Small_PN",52.5
+2019,6,"HHHR2","Small_PN",135
+2019,7,"HHHR2","Small_PN",1890
+2019,8,"HHHR2","Small_PN",4245
+2019,9,"HHHR2","Small_PN",1282.5
+2019,10,"HHHR2","Small_PN",2062.5
+2019,11,"HHHR2","Small_PN",307.5
+2019,12,"HHHR2","Small_PN",0
+2020,2,"HHHR2","Small_PN",5295
+2020,3,"HHHR2","Small_PN",8347.5
+2020,4,"HHHR2","Small_PN",90
+2020,5,"HHHR2","Small_PN",1159442.5
+2020,6,"HHHR2","Small_PN",1100320
+2020,7,"HHHR2","Small_PN",25800
+2020,8,"HHHR2","Small_PN",5782.5
+2020,9,"HHHR2","Small_PN",24442.5
+2020,10,"HHHR2","Small_PN",1350
+2020,11,"HHHR2","Small_PN",2475
+2020,12,"HHHR2","Small_PN",3555
+2021,1,"HHHR2","Small_PN",1402.5
+2021,2,"HHHR2","Small_PN",0
+2021,3,"HHHR2","Small_PN",60
+2021,4,"HHHR2","Small_PN",0
+2021,5,"HHHR2","Small_PN",0
+2021,6,"HHHR2","Small_PN",0
+2021,7,"HHHR2","Small_PN",0
+2021,8,"HHHR2","Small_PN",0
+2021,9,"HHHR2","Small_PN",37.5
+2021,10,"HHHR2","Small_PN",0
+2021,11,"HHHR2","Small_PN",0
+2021,12,"HHHR2","Small_PN",0
+2022,1,"HHHR2","Small_PN",0
+2022,2,"HHHR2","Small_PN",690
+2022,3,"HHHR2","Small_PN",32100
+2022,4,"HHHR2","Small_PN",7.5
+2022,5,"HHHR2","Small_PN",0
+2022,6,"HHHR2","Small_PN",0
+2022,7,"HHHR2","Small_PN",7237.5
+2022,8,"HHHR2","Small_PN",30

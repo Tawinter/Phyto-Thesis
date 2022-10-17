@@ -30,9 +30,10 @@ library (plsVarSel)
 #Q.1 Seasonal Pattern Graphs
 
 #Refer to Month Sums.R file for data manipulation
+
 totalch <- read.csv("totalch.csv", stringsAsFactors = TRUE)
 
-colnames(totalch)<- c("Station", "Year", "Month", "Species", "Sum")
+colnames(totalch)<- c("Year", "Month", "Station", "Species", "Sum")
 
 totalch <- 
   totalch %>%
@@ -49,9 +50,8 @@ mymonths <- c("Jan","Feb","Mar",
 
 totalch$MoAb <- mymonths[ totalch$Month ]
 
-write.csv(totalch,'totalch.csv', row.names = FALSE)
 
-#Dot plot of individual years
+#Dot plot of individual years DONE
 
 totalch$MoAb = factor(totalch$MoAb, levels = month.abb)
 
@@ -68,7 +68,7 @@ ggplot(totalch, aes(x = MoAb, y = Sum)) +
   ylab(bquote('Log sum abundance '(cells~L^-1))) +
   facet_grid(rows = vars(Species), cols = vars(Station))
 
-#Box and whisker of month sum, years combined using totalch.csv from previous graph
+#Box and whisker of month sum, years combined using totalch.csv from previous graph DONE
 setwd("D:/R/phyto-thesis")
 
 hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
@@ -150,7 +150,7 @@ ggplot(maxch, aes(x = Year, y = Max))  +
   facet_grid(cols = vars(Station))
 
 
-#Two panel graph with sum of all species and years on a single graph, locations separate
+#Two panel graph with sum of all species and years on a single graph, locations separate DONE
 cml_sum <- cml %>% 
   group_by(Year, Station) %>% 
   summarize_at(c("Alex", "Large_PN", "Small_PN"), sum, na.rm = TRUE)
@@ -180,23 +180,25 @@ ggplot(sumch, aes(x = Year, y = Sum))  +
 
 #Are they co-occurring?
 
-combch <- read.csv("combinedch.csv" , stringsAsFactors = TRUE)
+hampton <- read.csv("R_HHHR2.csv" , stringsAsFactors = TRUE)
+cml <- read.csv("R_UNH_Pier.csv", stringsAsFactors = TRUE)
 
-colnames(combch)<- c("Week", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
+colnames(hampton)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")
 
-comb <- gather(combch, size_class, abundance, Large_PN, Small_PN)
+colnames(cml)<- c("Week", "Date", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN", 
+                  "Temp", "Salinity")
 
-comb <- 
-  comb %>%
-  mutate_at("Station", str_replace, "CML", "UNH Pier")
+cml <- cml[, c("Week", "Month", "Day", "Year", "Station", "Alex", "Large_PN", "Small_PN")]
 
-comb <- 
-  comb %>%
-  mutate_at("Station", str_replace, "Hampton", "HHHR2")
+comb <- cml %>% full_join(hampton)
+
+comb <- gather(comb, Size_class, Abundance, Large_PN:Small_PN, factor_key=TRUE)
 
 write.csv(comb, "combinedch.csv", row.names = FALSE)
 
-ggplot(combch, aes(x = abundance, y = Alex))  + 
+combch <- read.csv("combinedch.csv" , stringsAsFactors = TRUE)
+
+ggplot(combch, aes(x = Abundance, y = Alex))  + 
   geom_point(size = 3) +
   geom_smooth(method="lm", se=FALSE, linetype = 'dashed', fullrange = TRUE) +
   scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
@@ -204,13 +206,13 @@ ggplot(combch, aes(x = abundance, y = Alex))  +
   theme_bw() + 
   xlab(expression(paste("Log ", italic("Pseudo-nitzschia "), "abundance ", (cells~L^-1))))+
   ylab(expression(paste("Log ", italic("Alexandrium "), "abundance ", (cells~L^-1))))+
-  facet_rep_wrap(~ interaction(size_class, Station), scales='free_x', repeat.tick.labels = 'bottom')
+  facet_rep_wrap(~ interaction(Size_class, Station), scales='free_x', repeat.tick.labels = 'bottom')
 
 
 #Filtering out zeros to get count for co occurance table
-coocur <- combch %>% filter(Alex > 0, abundance > 0)
+coocur <- combch %>% filter(Alex > 0, Abundance > 0)
 
-table(coocur$Station, coocur$size_class, coocur$Year)
+table(coocur$Station, coocur$Size_class, coocur$Year)
 
 #Regression of co ocurrance
 
@@ -218,33 +220,33 @@ table(coocur$Station, coocur$size_class, coocur$Year)
   #Attempted a spearman but there were ties and the p-value could not be calculated correctly
 
 #Kendall test running all the data
-cor.test(coocur$abundance,coocur$Alex, method="kendall")
+cor.test(combch$Abundance,combch$Alex, method="kendall")
 
 #Running four individual Kendall tests for each graph
-lh_alex <- coocur %>% filter(Station == "HHHR2", size_class == "Large_PN")
+lh_alex <- combch %>% filter(Station == "HHHR2", Size_class == "Large_PN")
 
-cor.test(lh_alex$abundance, lh_alex$Alex, method="kendall")
+cor.test(lh_alex$Abundance, lh_alex$Alex, method="kendall")
 
 KendallTauB(lh_alex$abundance,lh_alex$Alex)
 
 
-sh_alex <- coocur %>% filter(Station == "HHHR2", size_class == "Small_PN")
+sh_alex <- combch %>% filter(Station == "HHHR2", Size_class == "Small_PN")
 
-cor.test(sh_alex$abundance, sh_alex$Alex, method="kendall")
+cor.test(sh_alex$Abundance, sh_alex$Alex, method="kendall")
 
 KendallTauB(sh_alex$abundance,sh_alex$Alex)
 
 
-lu_alex <- coocur %>% filter(Station == "UNH Pier", size_class == "Large_PN")
+lu_alex <- combch %>% filter(Station == "UNH Pier", Size_class == "Large_PN")
 
-cor.test(lu_alex$abundance, lu_alex$Alex, method="kendall")
+cor.test(lu_alex$Abundance, lu_alex$Alex, method="kendall")
 
 KendallTauB(lu_alex$abundance,lu_alex$Alex)
 
 
-su_alex <- coocur %>% filter(Station == "UNH Pier", size_class == "Small_PN")
+su_alex <- combch %>% filter(Station == "UNH Pier", Size_class == "Small_PN")
 
-cor.test(su_alex$abundance, su_alex$Alex, method="kendall")
+cor.test(su_alex$Abundance, su_alex$Alex, method="kendall")
 
 KendallTauB(su_alex$abundance,su_alex$Alex)
 
