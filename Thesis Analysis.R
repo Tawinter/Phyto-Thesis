@@ -251,7 +251,7 @@ cor.test(su_alex$Abundance, su_alex$Alex, method="kendall")
 KendallTauB(su_alex$abundance,su_alex$Alex)
 
 
-#Finding percentage of sum that the max takes up and creating graph NO TABLE
+#Finding percentage of sum that the max takes up and creating graph NO TABLE DID NOT USE
 maxch <- read.csv("maxch.csv", stringsAsFactors = TRUE)
 sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
 
@@ -269,7 +269,7 @@ ggplot(data = subset(perch, !is.na(Percent)), aes(x= Year, y = Percent)) +
   geom_point(size = 3, stat = "identity") +
   scale_y_continuous(labels = scales::percent) +
   theme_bw() + 
-  labs(x = "Year", y = "Percentage max of sum")+
+  labs(x = "Year", y = "Max Abundance of the Annual Sum")+
   facet_grid(rows = vars(Species), cols = vars(Station))
 
 
@@ -298,7 +298,7 @@ cmlc <- cmlc %>% drop_na()
 
 hamptonc <- hamptonc %>% drop_na()
 
-#Counting total observations
+#Counting total samplings
 c_total <- cmlc %>% count(Year, Station, Species)
 
 h_total <- hamptonc %>% count(Year, Station, Species)
