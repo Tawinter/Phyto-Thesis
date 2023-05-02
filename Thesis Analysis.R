@@ -411,13 +411,16 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = temperature, y = abunda
   facet_grid(rows = vars(species.avg))
 
 #Graphing average abundance against salinity
-ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = salinity, y = abundance.avg)) +
+
+nutlong_sal <- nutlong %>% filter(salinity >= 16)
+
+ggplot(nutlong_sal[which(nutlong_sal$abundance.avg>0),], aes(x = salinity, y = abundance.avg)) +
   geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_fill_viridis() +
   scale_x_continuous(breaks=seq(12,36,2)) +
   theme_bw() +
-  xlab('Salinity (ppt)')+
+  xlab('Average Salinity (ppt)')+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
 

@@ -347,6 +347,27 @@ salinity <- full_join(salinity, uavg_sal, by = c('fct_inorder.MY.'))
 salinity <- salinity %>% mutate(salinity = coalesce(salinity.x,salinity.y)) %>%
   select(`fct_inorder.MY.`, salinity)
 
+max(cfil_sal$datavalue, na.rm = TRUE)
+min(cfil_sal$datavalue, na.rm = TRUE)
+
+cfil_sal <- cfil_sal %>% filter(Year == 2018)
+
+fil_cml <- cfil_sal %>% filter(datavalue <= 15)
+
+max(bfil_sal$datavalue, na.rm = TRUE)
+min(bfil_sal$datavalue, na.rm = TRUE)
+
+bfil_sal <- bfil_sal %>% filter(Year == 2018)
+
+fil_bchn <- bfil_sal %>% filter(datavalue <= 15)
+
+max(ufil_sal$datavalue, na.rm = TRUE)
+min(ufil_sal$datavalue, na.rm = TRUE)
+
+ufil_sal <- ufil_sal %>% filter(Year == 2018)
+
+fil_gulb <- ufil_sal %>% filter(datavalue <= 15)
+
 #Combining temperature dataframes
 cavg_temp <- cfil_temp %>% 
   group_by(fct_inorder(MY)) %>% 
