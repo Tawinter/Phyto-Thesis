@@ -24,6 +24,9 @@ library(mblm)
 library(pls)
 library (plsVarSel)
 
+#Generalized Linear Model packages
+library(faraway)
+library(MASS)
 
 ############General Trend Graphs Beings Here#########################
 
@@ -102,13 +105,25 @@ chmo <- read.csv("ch_boxplot.csv", stringsAsFactors = TRUE)
 
 chmo$MoAb = factor(chmo$MoAb, levels = month.abb)
 
+Alex_limit <- log10(7.5)
+Large_PN <- log10(2000)
+Small_PN <- log10(15000)
+
+cell_limits <- data.frame(group = unique(chmo$Species), hline = c(0.875, 3.301, 4.176))
+
 ggplot(chmo, aes(x = MoAb, y = Abundance)) + 
   geom_boxplot() +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_x_discrete(limits = month.abb) +
+  geom_hline(data = chmo %>% filter(Species == "Alex"),
+             aes(yintercept = 0.875), col = "purple", linetype = 1)+
+  geom_hline(data = chmo %>% filter(Species == "Large_PN"),
+             aes(yintercept = 3.301), col = "purple", linetype = 1)+
+  geom_hline(data = chmo %>% filter(Species == "Small_PN"),
+             aes(yintercept = 4.176), col = "purple", linetype = 1)+
   theme_bw() + 
   xlab('Month')+
-  ylab(bquote('Log abundance of combined years '(cells~L^-1))) +
+  ylab(bquote('Log total abundance of all years '(cells~L^-1))) +
   facet_grid(rows = vars(Species), cols = vars(Station), scales = "free_y")
 
 
@@ -482,6 +497,10 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg
   facet_grid(rows = vars(species.avg))
 
 
+
+#############################PLS Analysis###############################
+
+
 library(pls)
 library (plsVarSel)
 
@@ -612,3 +631,10 @@ cor.test(alexReg$phosphorus, alexReg$abunAL, method="kendall")
 cor.test(smallReg$phosphorus, smallReg$abunSL, method = "kendall")
 
 cor.test(largeReg$phosphorus, largeReg$abunLL, method = "kendall")
+
+
+
+
+################Generalized Linear Model Analysis##########################
+
+help(glm)
