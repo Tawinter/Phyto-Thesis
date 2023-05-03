@@ -116,11 +116,11 @@ ggplot(chmo, aes(x = MoAb, y = Abundance)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_x_discrete(limits = month.abb) +
   geom_hline(data = chmo %>% filter(Species == "Alex"),
-             aes(yintercept = 0.875), col = "purple", linetype = 1)+
+             aes(yintercept = 7.5), col = "purple", linetype = 1)+
   geom_hline(data = chmo %>% filter(Species == "Large_PN"),
-             aes(yintercept = 3.301), col = "purple", linetype = 1)+
+             aes(yintercept = 2000), col = "purple", linetype = 1)+
   geom_hline(data = chmo %>% filter(Species == "Small_PN"),
-             aes(yintercept = 4.176), col = "purple", linetype = 1)+
+             aes(yintercept = 15000), col = "purple", linetype = 1)+
   theme_bw() + 
   xlab('Month')+
   ylab(bquote('Log total abundance of all years '(cells~L^-1))) +
