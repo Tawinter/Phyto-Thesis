@@ -213,7 +213,7 @@ write.csv(comb, "combinedch.csv", row.names = FALSE)
 
 combch <- read.csv("combinedch.csv" , stringsAsFactors = TRUE)
 
-ggplot(combch, aes(x = Abundance, y = Alex))  + 
+ggplot(coocur, aes(x = Abundance, y = Alex))  + 
   geom_point(size = 3) +
   geom_smooth(method="lm", se=FALSE, linetype = 'dashed', fullrange = TRUE) +
   scale_x_log10(labels = function(x) format(x, scientific = TRUE)) +
@@ -227,6 +227,8 @@ ggplot(combch, aes(x = Abundance, y = Alex))  +
 #Filtering out zeros to get count for co occurance table
 coocur <- combch %>% filter(Alex > 0, Abundance > 0)
 
+write.csv(coocur, "coocur.csv", stringsAsFactors = TRUE)
+
 table(coocur$Station, coocur$Size_class, coocur$Year)
 
 #Regression of co ocurrance
@@ -235,31 +237,31 @@ table(coocur$Station, coocur$Size_class, coocur$Year)
   #Attempted a spearman but there were ties and the p-value could not be calculated correctly
 
 #Kendall test running all the data
-cor.test(combch$Abundance,combch$Alex, method="kendall")
+cor.test(coocur$Abundance,coocur$Alex, method="kendall")
 
 #Running four individual Kendall tests for each graph
-lh_alex <- combch %>% filter(Station == "HHHR2", Size_class == "Large_PN")
+lh_alex <- coocur %>% filter(Station == "HHHR2", Size_class == "Large_PN")
 
 cor.test(lh_alex$Abundance, lh_alex$Alex, method="kendall")
 
 KendallTauB(lh_alex$abundance,lh_alex$Alex)
 
 
-sh_alex <- combch %>% filter(Station == "HHHR2", Size_class == "Small_PN")
+sh_alex <- coocur %>% filter(Station == "HHHR2", Size_class == "Small_PN")
 
 cor.test(sh_alex$Abundance, sh_alex$Alex, method="kendall")
 
 KendallTauB(sh_alex$abundance,sh_alex$Alex)
 
 
-lu_alex <- combch %>% filter(Station == "UNH Pier", Size_class == "Large_PN")
+lu_alex <- coocur %>% filter(Station == "UNH Pier", Size_class == "Large_PN")
 
 cor.test(lu_alex$Abundance, lu_alex$Alex, method="kendall")
 
 KendallTauB(lu_alex$abundance,lu_alex$Alex)
 
 
-su_alex <- combch %>% filter(Station == "UNH Pier", Size_class == "Small_PN")
+su_alex <- coocur %>% filter(Station == "UNH Pier", Size_class == "Small_PN")
 
 cor.test(su_alex$Abundance, su_alex$Alex, method="kendall")
 
