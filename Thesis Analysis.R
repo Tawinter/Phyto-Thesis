@@ -183,11 +183,15 @@ write.csv(sumch,'sumch.csv', row.names = FALSE)
 sumch <- read.csv("sumch.csv", stringsAsFactors = TRUE)
 
 ggplot(sumch, aes(x = Year, y = Sum))  + 
-  geom_point(aes(fill = factor(Species)), size = 3, shape = 21) +
-  scale_fill_manual(values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
+  geom_point(aes(fill = factor(Species), shape = (factor(Species))), size = 3) +
+  scale_fill_manual(name = "Species",
+                    labels = c("Alex", "Large_PN", "Small_PN"),
+                    values = c("#440154FF", "#1F968BFF", "#FDE725FF")) +
+  scale_shape_manual(name = "Species",
+                     labels = c("Alex", "Large_PN", "Small_PN"),
+                     values = c(21, 22, 23)) +
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   theme_bw() + 
-  labs(fill = "Species") +
   xlab('Year')+
   ylab(bquote('Log sum abundance '(cells~L^-1))) +
   facet_grid(cols = vars(Station))
@@ -415,7 +419,7 @@ nutlong <- transform(nutlong,
 write.csv(nutlong,'CML_Nut_Long.csv', row.names = FALSE)
 
 #Graphing avg against temp
-alab <- expression('Temperature ('*degree*C*')')
+alab <- expression('Average Temperature ('*degree*C*')')
 
 ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = temperature, y = abundance.avg)) +
   geom_point(size = 2.5, shape = 21, aes(fill = Year)) +
@@ -448,7 +452,7 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = nitrogen, y = abundance
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_fill_viridis() +
   theme_bw() +
-  xlab(bquote('Nitrogen ' ~(mg~L^-1)))+
+  xlab(bquote('Avaerage Nitrogen ' ~(mg~L^-1)))+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
 
@@ -459,7 +463,7 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = phosphorus, y = abundan
   scale_fill_viridis() +
   scale_x_continuous(breaks = seq(0,0.04, 0.005)) +
   theme_bw() +
-  xlab(bquote('Phosphorus ' ~(mg~L^-1)))+
+  xlab(bquote('Average Phosphorus ' ~(mg~L^-1)))+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
 
@@ -486,7 +490,7 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = tss, y = abundance.avg)
   facet_grid(rows = vars(species.avg))
 
 #Graphing against chla
-blab <- expression('Chlorophyll a (' *mu*g/l*')')
+blab <- expression('Average Chlorophyll a (' *mu*g/l*')')
 
 ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg)) +
   geom_point(size = 2.5, shape =21, aes(fill = Year)) +
@@ -494,7 +498,7 @@ ggplot(nutlong[which(nutlong$abundance.avg>0),], aes(x = chla, y = abundance.avg
   scale_y_log10(labels = function(x) format(x, scientific = TRUE)) +
   scale_fill_viridis() +
   theme_bw() +
-  xlab(bquote('Chlorophyll ' ~(mu*L^-1)))+
+  xlab(bquote('Average Chlorophyll ' ~(mu*L^-1)))+
   ylab(bquote('Log average abundance ' ~(cells~L^-1))) +
   facet_grid(rows = vars(species.avg))
 
